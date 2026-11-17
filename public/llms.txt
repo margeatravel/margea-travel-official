@@ -1,0 +1,41 @@
+# Margea Travel
+
+> Direct bookings for luxury vacation rentals, tours, and activities across Mexico's Riviera Maya — Cancún, Playa del Carmen, Tulum, Akumal, Puerto Morelos, and Isla Mujeres.
+
+Margea is a Riviera Maya travel and property-management company. Guests book vacation rentals and curated tours directly (no platform fees), with 24/7 concierge and instant confirmation. Property owners list with our management program.
+
+## Pages
+
+- [Home](/): Featured stays, tours, and why book direct with Margea.
+- [Stays](/stays): All vacation rentals across the Riviera Maya.
+- [Stays in Tulum](/stays/tulum): Vacation rentals in Tulum.
+- [Stays in Cancún](/stays/cancun): Vacation rentals in Cancún.
+- [Stays in Playa del Carmen](/stays/playa-del-carmen): Vacation rentals in Playa del Carmen.
+- [Stays in Akumal](/stays/akumal): Vacation rentals in Akumal.
+- [Stays in Puerto Morelos](/stays/puerto-morelos): Vacation rentals in Puerto Morelos.
+- [Stays in Isla Mujeres](/stays/isla-mujeres): Vacation rentals in Isla Mujeres.
+- [Tours](/tours): Tours and excursions across the Riviera Maya.
+- [Chichén Itzá Tour](/tours/chichen-itza): Day trip to Chichén Itzá.
+- [Akumal Sea Turtle Tour](/tours/akumal-sea-turtle): Snorkel with sea turtles in Akumal.
+- [Dolphin Swim Experience](/tours/dolphin-swim-experience): Swim-with-dolphins experience.
+- [Yachts](/yachts): Private yacht charters.
+- [Concierge](/concierge): 24/7 concierge services.
+- [Custom Package](/custom-package): Custom vacation packages.
+- [Vacation Bundles](/bundles): Pre-built vacation bundles.
+- [Transportation](/activities/transportation): Airport transfers and private transportation.
+- [Flights](/activities/flights): Private jet and flight services.
+- [Exotic Car Rentals](/activities/exotic-cars): Luxury and exotic car rentals.
+- [Golf Courses](/activities/golf): Tee-time bookings at Riviera Maya golf courses.
+- [Property Management](/property-management): List your property with Margea.
+- [Revenue Calculator](/property-management/calculator): Estimate rental revenue for your property.
+- [Margea Members](/members): Loyalty program with member-only perks.
+- [About](/about): About Margea Travel.
+- [Contact](/contact): Get in touch.
+
+## Optional
+
+- [Terms](/terms): Terms of service.
+- [Privacy](/privacy): Privacy policy.
+- [Cancellation](/cancellation): Cancellation policy.
+- [Seasonal Pricing](/seasonal-pricing): Seasonal pricing information.
+- [Calendar Sync](/calendar-sync): iCal sync setup for property owners.

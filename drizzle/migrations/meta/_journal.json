@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789682234561,
+      "tag": "0000_external_bookings_uid_unique_full",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789691861166,
+      "tag": "0001_grant_external_bookings_sandbox",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791429961749,
+      "tag": "0002_add_cleaning_fee",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794595127052,
+      "tag": "0003_tighten_public_insert_policies",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794602755704,
+      "tag": "0004_secure_shared_carts_via_functions",
+      "breakpoints": true
+    }
+  ]
+}
