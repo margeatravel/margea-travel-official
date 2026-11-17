@@ -1,0 +1,20 @@
+UPDATE properties SET image_urls = ARRAY[
+  '/property-images/bungalow-213-1.png',
+  '/property-images/bungalow-213-2.png',
+  '/property-images/bungalow-213-3.png',
+  '/property-images/bungalow-213-4.png',
+  '/property-images/bungalow-213-5.png',
+  '/property-images/bungalow-213-6.png',
+  '/property-images/bungalow-213-7.png',
+  '/property-images/bungalow-213-8.png',
+  '/property-images/bungalow-213-9.png',
+  '/property-images/bungalow-213-10.png',
+  '/property-images/bungalow-village-amenities-1.jpeg',
+  '/property-images/bungalow-village-amenities-2.jpeg',
+  '/property-images/bungalow-village-amenities-3.jpeg',
+  '/property-images/bungalow-village-amenities-4.jpeg',
+  '/property-images/bungalow-village-amenities-5.jpeg',
+  '/property-images/bungalow-village-amenities-6.jpeg',
+  '/property-images/bungalow-village-amenities-7.jpeg',
+  '/property-images/bungalow-village-amenities-8.jpeg'
+] WHERE id = '83299490-e6ca-4ec8-b5b6-ff30304095c5';

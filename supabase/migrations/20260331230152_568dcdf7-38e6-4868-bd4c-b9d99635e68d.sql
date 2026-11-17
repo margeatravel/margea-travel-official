@@ -1,0 +1,1 @@
+UPDATE properties SET image_urls = ARRAY['/hotel-images/anayiose-hero-1.jpeg'] WHERE title = 'Ana y Jose Hotel & Beach Club' AND unit_type = 'hotel' AND parent_property_id IS NULL;

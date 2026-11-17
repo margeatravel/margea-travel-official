@@ -1,0 +1,16 @@
+import { createRoot } from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
+import App from "./App.tsx";
+import "./index.css";
+import { LanguageProvider } from "./components/LanguageToggle";
+import { CurrencyProvider } from "./hooks/use-currency";
+
+createRoot(document.getElementById("root")!).render(
+  <HelmetProvider>
+    <LanguageProvider>
+      <CurrencyProvider>
+        <App />
+      </CurrencyProvider>
+    </LanguageProvider>
+  </HelmetProvider>
+);

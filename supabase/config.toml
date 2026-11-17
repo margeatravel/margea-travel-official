@@ -1,0 +1,55 @@
+project_id = "koyqvfvrtwzsbhaiqzju"
+
+[functions.upload-property-images]
+verify_jwt = true
+
+[functions.send-member-welcome]
+verify_jwt = false
+
+[functions.send-booking-notification]
+verify_jwt = false
+
+[functions.create-booking-checkout]
+verify_jwt = false
+
+[functions.confirm-booking-payment]
+verify_jwt = false
+
+[functions.ical-export]
+verify_jwt = false
+
+[functions.ical-sync]
+verify_jwt = false
+
+[functions.send-property-request-notification]
+verify_jwt = false
+
+[functions.send-concierge-notification]
+verify_jwt = false
+
+[functions.send-promo-signup]
+verify_jwt = false
+
+[functions.places-autocomplete]
+verify_jwt = false
+
+[functions.calculate-distance]
+verify_jwt = false
+
+[functions.create-custom-route-checkout]
+verify_jwt = false
+
+[functions.create-flight-checkout]
+verify_jwt = false
+
+[functions.bokun-availability]
+verify_jwt = false
+
+[functions.create-cart-checkout]
+verify_jwt = false
+
+[functions.send-owner-contact-notification]
+verify_jwt = false
+
+[functions.submit-point-claim]
+verify_jwt = false

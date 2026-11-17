@@ -1,0 +1,1 @@
+create unique index if not exists external_bookings_uid_unique on public.external_bookings (property_id, source_url, external_id) where external_id is not null;
