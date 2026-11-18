@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Download media zips from release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,7 +36,7 @@ jobs:
           git add public/
           git status --short | head -20
           git commit -m "Add media files (photos and videos)" || echo "nothing to commit"
-          git push
+          git push origin HEAD:main
       - name: Delete the media release
         if: success()
         env:
