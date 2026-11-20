@@ -32,7 +32,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send HIGH PRIORITY email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Yacht Bookings <onboarding@resend.dev>",
+      from: "Margea Yacht Bookings <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🔴 NUEVA RESERVA DE YATE - ${booking.yacht_name}`,
       html: `
@@ -67,7 +67,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to guest with complete details
     const guestEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [booking.guest_email],
       subject: `✅ Confirmación de Reserva - Yate ${booking.yacht_name}`,
       html: `

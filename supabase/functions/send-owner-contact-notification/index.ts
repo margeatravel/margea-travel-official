@@ -23,7 +23,7 @@ const handler = async (req: Request): Promise<Response> => {
     const rentingLabel = renting === "yes" ? "Yes" : "No";
 
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Properties <onboarding@resend.dev>",
+      from: "Margea Properties <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🟢 Nueva consulta de propietario — ${fullName}`,
       html: `

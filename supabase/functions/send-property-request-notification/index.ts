@@ -55,7 +55,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Property Requests <onboarding@resend.dev>",
+      from: "Margea Property Requests <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `New Property Submission - Case #${caseNumber}`,
       html: `
@@ -104,7 +104,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to client
     const clientEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [contactEmail],
       subject: `Property Submission Received - Case #${caseNumber}`,
       html: `

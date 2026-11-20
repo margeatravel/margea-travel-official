@@ -53,7 +53,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send HIGH PRIORITY email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Custom Packages <onboarding@resend.dev>",
+      from: "Margea Custom Packages <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🔴 NUEVA SOLICITUD DE PAQUETE - ${packageRequest.name}`,
       html: `
@@ -93,7 +93,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to customer with complete details
     const customerEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [packageRequest.email],
       subject: "✅ Confirmación - Solicitud de Paquete Personalizado Margea",
       html: `

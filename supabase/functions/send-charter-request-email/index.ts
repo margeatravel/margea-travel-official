@@ -25,7 +25,7 @@ serve(async (req) => {
 
     // Admin email
     await resend.emails.send({
-      from: "Margea Aviation <onboarding@resend.dev>",
+      from: "Margea Aviation <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🔴 Private Charter Request – ${aircraft} – Case #${caseNumber}`,
       html: `
@@ -67,7 +67,7 @@ serve(async (req) => {
 
     // Client confirmation
     await resend.emails.send({
-      from: "Margea Aviation <onboarding@resend.dev>",
+      from: "Margea Aviation <noreply@margeatravel.com>",
       to: [email],
       subject: `Private Charter Request Received – Case #${caseNumber}`,
       html: `

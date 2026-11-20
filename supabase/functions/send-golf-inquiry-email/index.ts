@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Admin email
     await resend.emails.send({
-      from: "Margea Golf <onboarding@resend.dev>",
+      from: "Margea Golf <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🔴 Golf Tee Time Request – ${preferredCourse} – Case #${caseNumber}`,
       html: `
@@ -68,7 +68,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Client confirmation
     await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [email],
       subject: `Golf Inquiry Received – Case #${caseNumber}`,
       html: `

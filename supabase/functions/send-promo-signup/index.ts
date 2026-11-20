@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send notification email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Promo <onboarding@resend.dev>",
+      from: "Margea Promo <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🎉 NEW PROMO SIGNUP - ${data.firstName} ${data.lastName} - Airport Transfer 20%`,
       html: `
@@ -74,7 +74,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user with promo code
     const userEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [data.email],
       subject: "Your Exclusive 20% Airport Transfer Discount",
       html: `

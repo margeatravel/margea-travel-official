@@ -120,7 +120,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Concierge <onboarding@resend.dev>",
+      from: "Margea Concierge <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `${subjectEmoji} Concierge Request — ${serviceType} — Case #${caseNumber}`,
       html: `
@@ -167,7 +167,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to client
     const clientEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [contactEmail],
       subject: `Concierge Request Received - Case #${caseNumber}`,
       html: `
