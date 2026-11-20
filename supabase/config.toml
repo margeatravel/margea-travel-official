@@ -1,12 +1,6 @@
-project_id = "koyqvfvrtwzsbhaiqzju"
-
-[functions.upload-property-images]
-verify_jwt = true
+project_id = "qikiiopqmiwsedpvxjqx"
 
 [functions.send-member-welcome]
-verify_jwt = false
-
-[functions.send-booking-notification]
 verify_jwt = false
 
 [functions.create-booking-checkout]
