@@ -5,8 +5,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
-
 interface AutocompleteRequest {
   input: string;
   sessionToken?: string;
@@ -23,17 +21,9 @@ serve(async (req) => {
   }
 
   try {
-    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
-    const connKey =
-      Deno.env.get("GOOGLE_MAPS_API_KEY_1") ?? Deno.env.get("GOOGLE_MAPS_API_KEY");
-    if (!lovableKey) throw new Error("LOVABLE_API_KEY is not configured");
-    if (!connKey) throw new Error("Google Maps connector API key is not configured");
-
-    const gatewayHeaders = {
-      Authorization: `Bearer ${lovableKey}`,
-      "X-Connection-Api-Key": connKey,
-      "Content-Type": "application/json",
-    };
+    // Direct Google Maps API key (no Lovable gateway).
+    const apiKey = Deno.env.get("GOOGLE_MAPS_API_KEY");
+    if (!apiKey) throw new Error("Google Maps API key is not configured");
 
     const url = new URL(req.url);
     const action = url.searchParams.get("action");
@@ -56,9 +46,14 @@ serve(async (req) => {
       };
       if (sessionToken) body.sessionToken = sessionToken;
 
-      const response = await fetch(`${GATEWAY_URL}/places/v1/places:autocomplete`, {
+      const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
         method: "POST",
-        headers: gatewayHeaders,
+        headers: {
+          "Content-Type": "application/json",
+          "X-Goog-Api-Key": apiKey,
+          "X-Goog-FieldMask":
+            "suggestions.placePrediction.placeId,suggestions.placePrediction.text,suggestions.placePrediction.structuredFormat.mainText,suggestions.placePrediction.structuredFormat.secondaryText",
+        },
         body: JSON.stringify(body),
       });
 
@@ -94,13 +89,13 @@ serve(async (req) => {
 
       console.log("Place details (New) request:", { placeId });
 
-      const detailsUrl = new URL(`${GATEWAY_URL}/places/v1/places/${placeId}`);
+      const detailsUrl = new URL(`https://places.googleapis.com/v1/places/${placeId}`);
       if (sessionToken) detailsUrl.searchParams.set("sessionToken", sessionToken);
 
       const response = await fetch(detailsUrl.toString(), {
         method: "GET",
         headers: {
-          ...gatewayHeaders,
+          "X-Goog-Api-Key": apiKey,
           "X-Goog-FieldMask": "id,displayName,formattedAddress,location",
         },
       });

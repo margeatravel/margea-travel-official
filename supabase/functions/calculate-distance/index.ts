@@ -5,8 +5,6 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/google_maps";
-
 interface DistanceRequest {
   pickup: string;
   dropoff: string;
@@ -21,27 +19,14 @@ serve(async (req) => {
     const { pickup, dropoff }: DistanceRequest = await req.json();
     console.log("Calculating distance:", { pickup, dropoff });
 
-    const lovableKey = Deno.env.get("LOVABLE_API_KEY");
-    const connKey =
-      Deno.env.get("GOOGLE_MAPS_API_KEY_1") ?? Deno.env.get("GOOGLE_MAPS_API_KEY");
-    if (!lovableKey) throw new Error("LOVABLE_API_KEY is not configured");
-    if (!connKey) throw new Error("Google Maps connector API key is not configured");
+    // Direct Google Maps API key (no Lovable gateway).
+    const apiKey = Deno.env.get("GOOGLE_MAPS_API_KEY");
+    if (!apiKey) throw new Error("Google Maps API key is not configured");
 
-    const gatewayHeaders = {
-      Authorization: `Bearer ${lovableKey}`,
-      "X-Connection-Api-Key": connKey,
-      "Content-Type": "application/json",
-    };
-
-    // Geocode both addresses via the gateway (legacy Geocoding API still supported)
+    // Geocode both addresses via the Geocoding API
     const geocode = async (address: string) => {
-      const url = `${GATEWAY_URL}/maps/api/geocode/json?address=${encodeURIComponent(address)}`;
-      const r = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${lovableKey}`,
-          "X-Connection-Api-Key": connKey,
-        },
-      });
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      const r = await fetch(url);
       const data = await r.json();
       if (data.status !== "OK" || !data.results?.[0]) {
         throw new Error(
@@ -84,11 +69,12 @@ serve(async (req) => {
     };
 
     const response = await fetch(
-      `${GATEWAY_URL}/routes/distanceMatrix/v2:computeRouteMatrix`,
+      "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix",
       {
         method: "POST",
         headers: {
-          ...gatewayHeaders,
+          "Content-Type": "application/json",
+          "X-Goog-Api-Key": apiKey,
           "X-Goog-FieldMask":
             "originIndex,destinationIndex,distanceMeters,duration,status,condition",
         },
