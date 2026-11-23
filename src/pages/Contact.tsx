@@ -27,6 +27,7 @@ const translations = {
     success: "Message sent successfully!",
     successDesc: "We'll get back to you as soon as possible. Check your email for confirmation.",
     error: "Failed to send message",
+    verificationPending: "Security check not ready yet — please wait a moment and try again.",
     contactInfo: "Contact Information",
     emailLabel: "Email",
     phoneLabel: "Phone",
@@ -47,6 +48,7 @@ const translations = {
     success: "¡Mensaje enviado con éxito!",
     successDesc: "Nos pondremos en contacto contigo lo antes posible. Revisa tu correo para la confirmación.",
     error: "Error al enviar el mensaje",
+    verificationPending: "La verificación de seguridad aún no está lista, espera un momento e inténtalo de nuevo.",
     contactInfo: "Información de Contacto",
     emailLabel: "Email",
     phoneLabel: "Teléfono",
@@ -94,12 +96,28 @@ export default function Contact() {
 
     const caseNumber = generateCaseNumber();
 
+    // When Turnstile is configured, require a token before invoking —
+    // otherwise a missing/expired token reaches the edge function and the
+    // user only sees a generic failure. getToken() never throws (it
+    // returns null when the widget is not ready), so this shows the
+    // friendly message instead of a raw Turnstile error.
+    const turnstileToken = turnstileRef.current?.getToken() ?? null;
+    if (turnstileSiteKey && !turnstileToken) {
+      toast({
+        title: t.error,
+        description: t.verificationPending,
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
       const { error } = await supabase.functions.invoke('send-contact-email', {
         body: {
           ...formData,
           caseNumber,
-          turnstileToken: turnstileRef.current?.getToken() ?? null,
+          turnstileToken,
           honeypot,
         }
       });

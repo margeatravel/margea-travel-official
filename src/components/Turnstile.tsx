@@ -102,8 +102,15 @@ const Turnstile = forwardRef<TurnstileHandle, TurnstileProps>(
               tokenRef.current = null;
             },
             "error-callback": () => {
+              // A failed challenge (e.g. Turnstile flags the visitor) must
+              // NOT unmount the widget: Turnstile shows its own retry state
+              // in place, and the visitor can try again. Unmounting here
+              // used to leave the form with no widget at all, so the next
+              // submit failed with "Could not find widget for provided
+              // container". Just drop the token; the submit guard below
+              // shows the friendly "wait a moment" message until a fresh
+              // token exists.
               tokenRef.current = null;
-              setFailed(true);
             },
           });
         })
@@ -125,18 +132,30 @@ const Turnstile = forwardRef<TurnstileHandle, TurnstileProps>(
 
     useImperativeHandle(ref, () => ({
       getToken: () => {
+        // Never throw: if the widget is gone (or Turnstile is mid-reset),
+        // getResponse throws "Could not find widget for provided
+        // container". Return null instead so the submit guard can show
+        // the friendly "wait a moment" message.
         if (widgetIdRef.current && window.turnstile) {
-          return (
-            window.turnstile.getResponse(widgetIdRef.current) ||
-            tokenRef.current
-          );
+          try {
+            return (
+              window.turnstile.getResponse(widgetIdRef.current) ||
+              tokenRef.current
+            );
+          } catch {
+            return tokenRef.current;
+          }
         }
         return tokenRef.current;
       },
       reset: () => {
         tokenRef.current = null;
         if (widgetIdRef.current && window.turnstile) {
-          window.turnstile.reset(widgetIdRef.current);
+          try {
+            window.turnstile.reset(widgetIdRef.current);
+          } catch {
+            // Widget already gone; nothing to reset.
+          }
         }
       },
     }));
