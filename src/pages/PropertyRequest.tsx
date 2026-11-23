@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 import { Language } from "@/components/LanguageToggle";
 import { Home, Mail, Phone, MapPin, DollarSign, Users, Bath, Bed, Instagram } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
@@ -39,6 +40,7 @@ const translations = {
     success: "Request submitted successfully!",
     successDesc: "We'll review your property and contact you soon. Check your email for confirmation.",
     error: "Failed to submit request",
+    verificationPending: "Security check not ready yet — please wait a moment and try again.",
     villa: "Villa",
     condo: "Condo",
     apartment: "Apartment",
@@ -70,6 +72,7 @@ const translations = {
     success: "¡Solicitud enviada con éxito!",
     successDesc: "Revisaremos su propiedad y nos contactaremos pronto. Revise su correo para la confirmación.",
     error: "Error al enviar la solicitud",
+    verificationPending: "La verificación de seguridad aún no está lista, espera un momento e inténtalo de nuevo.",
     villa: "Villa",
     condo: "Condominio",
     apartment: "Apartamento",
@@ -94,6 +97,17 @@ export default function PropertyRequest() {
   const [submittedCaseNumber, setSubmittedCaseNumber] = useState<string | null>(null);
   const t = translations[language];
 
+  // Anti-bot: Cloudflare Turnstile (managed mode) + honeypot.
+  // The widget only renders when VITE_TURNSTILE_SITE_KEY is set; until then
+  // the form submits without a token and the edge function allows it
+  // (transition mode). The honeypot field is visually hidden — real users
+  // never fill it, bots often do.
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as
+    | string
+    | undefined;
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const [honeypot, setHoneypot] = useState("");
+
   const [formData, setFormData] = useState({
     contactName: "",
     contactEmail: "",
@@ -115,6 +129,29 @@ export default function PropertyRequest() {
     setIsSubmitting(true);
 
     const caseNumber = generateCaseNumber();
+
+    // Honeypot filled = bot. Pretend success (same thank-you redirect) but
+    // store nothing and send no email.
+    if (honeypot.trim() !== "") {
+      console.warn("Property request blocked: honeypot field was filled (bot).");
+      setIsSubmitting(false);
+      navigate(`/thank-you?case=${caseNumber}`);
+      return;
+    }
+
+    // When Turnstile is configured, require a token before touching the
+    // database — otherwise bots would still land junk rows in
+    // property_requests even though the email gets rejected server-side.
+    const turnstileToken = turnstileRef.current?.getToken() ?? null;
+    if (turnstileSiteKey && !turnstileToken) {
+      toast({
+        title: t.error,
+        description: t.verificationPending,
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       const amenitiesArray = formData.amenities
@@ -160,6 +197,8 @@ export default function PropertyRequest() {
             pricePerNight: parseFloat(formData.pricePerNight),
             amenities: amenitiesArray,
             additionalInfo: formData.additionalInfo || null,
+            turnstileToken,
+            honeypot,
           },
         }
       );
@@ -185,6 +224,8 @@ export default function PropertyRequest() {
       });
     } finally {
       setIsSubmitting(false);
+      // Fresh Turnstile token for the next submit.
+      turnstileRef.current?.reset();
     }
   };
 
@@ -505,6 +546,15 @@ export default function PropertyRequest() {
                   </div>
                 </div>
 
+                {/* Honeypot: hidden from real users (CSS), bots often fill it.
+                    A filled value aborts the submission before any insert. */}
+                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}>
+                  <label htmlFor="website">Website</label>
+                  <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                </div>
+                {turnstileSiteKey ? (
+                  <Turnstile ref={turnstileRef} siteKey={turnstileSiteKey} />
+                ) : null}
                 <Button
                   type="submit"
                   className="w-full"

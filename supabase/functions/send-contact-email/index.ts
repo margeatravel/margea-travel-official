@@ -15,6 +15,33 @@ interface ContactEmailRequest {
   phone?: string;
   message: string;
   caseNumber: string;
+  turnstileToken?: string | null;
+  honeypot?: string;
+}
+
+/**
+ * Verify a Cloudflare Turnstile token against Cloudflare's siteverify API.
+ * Returns true only when Cloudflare confirms the token (data.success).
+ */
+async function verifyTurnstileToken(
+  token: string | null | undefined,
+  secret: string,
+): Promise<boolean> {
+  if (!token) return false;
+  try {
+    const body = new URLSearchParams();
+    body.append("secret", secret);
+    body.append("response", token);
+    const res = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      { method: "POST", body },
+    );
+    const data = await res.json();
+    return data?.success === true;
+  } catch (err) {
+    console.error("Turnstile siteverify request failed:", err);
+    return false;
+  }
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -24,13 +51,41 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { name, email, phone, message, caseNumber }: ContactEmailRequest = await req.json();
+    const { name, email, phone, message, caseNumber, turnstileToken, honeypot }: ContactEmailRequest = await req.json();
 
     console.log("Processing contact form submission:", { name, email, caseNumber });
 
+    // --- Anti-bot verification (Cloudflare Turnstile + honeypot) ---
+    // A filled honeypot field means a bot: reject without sending email.
+    if (typeof honeypot === "string" && honeypot.trim() !== "") {
+      console.warn("Rejected contact submission: honeypot field was filled (bot).");
+      return new Response(
+        JSON.stringify({ error: "Verification failed" }),
+        { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } },
+      );
+    }
+    // TRANSITION BEHAVIOR: Turnstile verification is enforced ONLY when
+    // TURNSTILE_SECRET_KEY is configured. Until the free Turnstile site is
+    // created in Cloudflare and the secret is set on this project, submissions
+    // are allowed through (with a warning logged) so real users are never
+    // blocked. Once the secret exists, a missing/invalid token is rejected.
+    const turnstileSecret = Deno.env.get("TURNSTILE_SECRET_KEY");
+    if (turnstileSecret) {
+      const verified = await verifyTurnstileToken(turnstileToken, turnstileSecret);
+      if (!verified) {
+        console.warn("Rejected contact submission: Turnstile verification failed.");
+        return new Response(
+          JSON.stringify({ error: "Verification failed" }),
+          { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } },
+        );
+      }
+    } else {
+      console.warn("TURNSTILE_SECRET_KEY is not configured — Turnstile verification skipped (transition mode).");
+    }
+
     // Send HIGH PRIORITY email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Contact <onboarding@resend.dev>",
+      from: "Margea Contact <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `🔴 NUEVO CONTACTO - ${name} - Case #${caseNumber}`,
       html: `
@@ -60,7 +115,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to user
     const userEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [email],
       subject: `We received your message - Case #${caseNumber}`,
       html: `

@@ -24,6 +24,33 @@ interface PropertyRequestNotification {
   pricePerNight: number;
   amenities: string[];
   additionalInfo: string | null;
+  turnstileToken?: string | null;
+  honeypot?: string;
+}
+
+/**
+ * Verify a Cloudflare Turnstile token against Cloudflare's siteverify API.
+ * Returns true only when Cloudflare confirms the token (data.success).
+ */
+async function verifyTurnstileToken(
+  token: string | null | undefined,
+  secret: string,
+): Promise<boolean> {
+  if (!token) return false;
+  try {
+    const body = new URLSearchParams();
+    body.append("secret", secret);
+    body.append("response", token);
+    const res = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      { method: "POST", body },
+    );
+    const data = await res.json();
+    return data?.success === true;
+  } catch (err) {
+    console.error("Turnstile siteverify request failed:", err);
+    return false;
+  }
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -35,6 +62,34 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const data: PropertyRequestNotification = await req.json();
     console.log("Received property request notification:", data);
+
+    // --- Anti-bot verification (Cloudflare Turnstile + honeypot) ---
+    // A filled honeypot field means a bot: reject without sending email.
+    if (typeof data.honeypot === "string" && data.honeypot.trim() !== "") {
+      console.warn("Rejected property request: honeypot field was filled (bot).");
+      return new Response(
+        JSON.stringify({ error: "Verification failed" }),
+        { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } },
+      );
+    }
+    // TRANSITION BEHAVIOR: Turnstile verification is enforced ONLY when
+    // TURNSTILE_SECRET_KEY is configured. Until the free Turnstile site is
+    // created in Cloudflare and the secret is set on this project, submissions
+    // are allowed through (with a warning logged) so real users are never
+    // blocked. Once the secret exists, a missing/invalid token is rejected.
+    const turnstileSecret = Deno.env.get("TURNSTILE_SECRET_KEY");
+    if (turnstileSecret) {
+      const verified = await verifyTurnstileToken(data.turnstileToken, turnstileSecret);
+      if (!verified) {
+        console.warn("Rejected property request: Turnstile verification failed.");
+        return new Response(
+          JSON.stringify({ error: "Verification failed" }),
+          { status: 403, headers: { "Content-Type": "application/json", ...corsHeaders } },
+        );
+      }
+    } else {
+      console.warn("TURNSTILE_SECRET_KEY is not configured — Turnstile verification skipped (transition mode).");
+    }
 
     const {
       caseNumber,
@@ -55,7 +110,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send email to admin
     const adminEmailResponse = await resend.emails.send({
-      from: "Margea Property Requests <onboarding@resend.dev>",
+      from: "Margea Property Requests <noreply@margeatravel.com>",
       to: ["admin@margeatravel.com"],
       subject: `New Property Submission - Case #${caseNumber}`,
       html: `
@@ -104,7 +159,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Send confirmation email to client
     const clientEmailResponse = await resend.emails.send({
-      from: "Margea <onboarding@resend.dev>",
+      from: "Margea <noreply@margeatravel.com>",
       to: [contactEmail],
       subject: `Property Submission Received - Case #${caseNumber}`,
       html: `

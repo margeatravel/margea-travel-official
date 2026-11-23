@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
@@ -10,6 +10,7 @@ import { Mail, Phone, MapPin, Send, Instagram } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import Turnstile, { TurnstileHandle } from "@/components/Turnstile";
 
 import { getWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -69,6 +70,17 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submittedCaseNumber, setSubmittedCaseNumber] = useState<string | null>(null);
 
+  // Anti-bot: Cloudflare Turnstile (managed mode) + honeypot.
+  // The widget only renders when VITE_TURNSTILE_SITE_KEY is set; until then
+  // the form submits without a token and the edge function allows it
+  // (transition mode). The honeypot field is visually hidden — real users
+  // never fill it, bots often do.
+  const turnstileSiteKey = import.meta.env.VITE_TURNSTILE_SITE_KEY as
+    | string
+    | undefined;
+  const turnstileRef = useRef<TurnstileHandle>(null);
+  const [honeypot, setHoneypot] = useState("");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -87,6 +99,8 @@ export default function Contact() {
         body: {
           ...formData,
           caseNumber,
+          turnstileToken: turnstileRef.current?.getToken() ?? null,
+          honeypot,
         }
       });
 
@@ -107,6 +121,8 @@ export default function Contact() {
       });
     } finally {
       setIsSubmitting(false);
+      // Fresh Turnstile token for the next submit.
+      turnstileRef.current?.reset();
     }
   };
 
@@ -217,6 +233,15 @@ export default function Contact() {
                   <label htmlFor="message" className={labelClasses}>{t.message} *</label>
                   <textarea id="message" required rows={5} value={formData.message} onChange={(e) => handleChange("message", e.target.value)} className={`${inputClasses} resize-none`} />
                 </div>
+                {/* Honeypot: hidden from real users (CSS), bots often fill it.
+                    The edge function rejects any submission with this filled. */}
+                <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", width: "1px", height: "1px", overflow: "hidden" }}>
+                  <label htmlFor="website">Website</label>
+                  <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+                </div>
+                {turnstileSiteKey ? (
+                  <Turnstile ref={turnstileRef} siteKey={turnstileSiteKey} />
+                ) : null}
                 <Button type="submit" className="w-full gap-2" size="lg" disabled={isSubmitting}>
                   <Send className="h-4 w-4" />
                   {isSubmitting ? t.sending : t.send}
