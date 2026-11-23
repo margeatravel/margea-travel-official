@@ -553,7 +553,7 @@ export default function PropertyRequest() {
                   <input id="website" name="website" type="text" autoComplete="off" tabIndex={-1} value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
                 </div>
                 {turnstileSiteKey ? (
-                  <Turnstile ref={turnstileRef} siteKey={turnstileSiteKey} />
+                  <Turnstile ref={turnstileRef} siteKey={turnstileSiteKey} action="property-request" />
                 ) : null}
                 <Button
                   type="submit"

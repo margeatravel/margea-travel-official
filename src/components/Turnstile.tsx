@@ -24,6 +24,8 @@ export interface TurnstileHandle {
 
 interface TurnstileProps {
   siteKey: string;
+  /** Stable action for this surface (e.g. "contact"). Verified server-side. */
+  action?: string;
 }
 
 const SCRIPT_ID = "cf-turnstile-script";
@@ -76,7 +78,7 @@ function loadTurnstileScript(): Promise<void> {
 }
 
 const Turnstile = forwardRef<TurnstileHandle, TurnstileProps>(
-  function Turnstile({ siteKey }, ref) {
+  function Turnstile({ siteKey, action }, ref) {
     const containerRef = useRef<HTMLDivElement>(null);
     const widgetIdRef = useRef<string | null>(null);
     const tokenRef = useRef<string | null>(null);
@@ -89,6 +91,7 @@ const Turnstile = forwardRef<TurnstileHandle, TurnstileProps>(
           if (cancelled || !containerRef.current || !window.turnstile) return;
           widgetIdRef.current = window.turnstile.render(containerRef.current, {
             sitekey: siteKey,
+            ...(action ? { action } : {}),
             // Managed mode is the default: no `appearance` override.
             // Turnstile shows a challenge only when it finds the visitor
             // suspicious; most real users see nothing.
@@ -118,7 +121,7 @@ const Turnstile = forwardRef<TurnstileHandle, TurnstileProps>(
           widgetIdRef.current = null;
         }
       };
-    }, [siteKey]);
+    }, [siteKey, action]);
 
     useImperativeHandle(ref, () => ({
       getToken: () => {

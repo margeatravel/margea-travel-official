@@ -30,11 +30,20 @@ interface PropertyRequestNotification {
 
 /**
  * Verify a Cloudflare Turnstile token against Cloudflare's siteverify API.
- * Returns true only when Cloudflare confirms the token (data.success).
+ * Returns true only when Cloudflare confirms the token (data.success) AND
+ * the token's action and hostname match this surface (Spin flow: success +
+ * expected action + approved frontend hostname). The live site serves from
+ * www.margeatravel.com (apex redirects there); both hosts are allowed.
  */
+const TURNSTILE_ALLOWED_HOSTNAMES = new Set([
+  "www.margeatravel.com",
+  "margeatravel.com",
+]);
+
 async function verifyTurnstileToken(
   token: string | null | undefined,
   secret: string,
+  expectedAction: string,
 ): Promise<boolean> {
   if (!token) return false;
   try {
@@ -46,7 +55,11 @@ async function verifyTurnstileToken(
       { method: "POST", body },
     );
     const data = await res.json();
-    return data?.success === true;
+    return (
+      data?.success === true &&
+      data?.action === expectedAction &&
+      TURNSTILE_ALLOWED_HOSTNAMES.has(data?.hostname)
+    );
   } catch (err) {
     console.error("Turnstile siteverify request failed:", err);
     return false;
@@ -79,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
     // blocked. Once the secret exists, a missing/invalid token is rejected.
     const turnstileSecret = Deno.env.get("TURNSTILE_SECRET_KEY");
     if (turnstileSecret) {
-      const verified = await verifyTurnstileToken(data.turnstileToken, turnstileSecret);
+      const verified = await verifyTurnstileToken(data.turnstileToken, turnstileSecret, "property-request");
       if (!verified) {
         console.warn("Rejected property request: Turnstile verification failed.");
         return new Response(
