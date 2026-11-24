@@ -76,6 +76,101 @@ export type Database = {
           },
         ]
       }
+      car_bookings: {
+        Row: {
+          additional_driver: boolean
+          balance_due_mxn: number
+          car_id: string
+          confirmation_number: string
+          created_at: string
+          deposit_paid_mxn: number
+          driver_email: string
+          driver_name: string
+          driver_phone: string | null
+          id: string
+          notes: string | null
+          payment_status: string
+          pickup_date: string
+          pickup_location: string | null
+          pickup_time: string | null
+          price_per_day_mxn: number
+          return_date: string
+          return_location: string | null
+          return_time: string | null
+          security_deposit_mxn: number | null
+          status: string
+          stripe_payment_intent_id: string | null
+          stripe_session_id: string | null
+          total_days: number
+          total_mxn: number
+          updated_at: string
+        }
+        Insert: {
+          additional_driver?: boolean
+          balance_due_mxn: number
+          car_id: string
+          confirmation_number: string
+          created_at?: string
+          deposit_paid_mxn: number
+          driver_email: string
+          driver_name: string
+          driver_phone?: string | null
+          id?: string
+          notes?: string | null
+          payment_status?: string
+          pickup_date: string
+          pickup_location?: string | null
+          pickup_time?: string | null
+          price_per_day_mxn: number
+          return_date: string
+          return_location?: string | null
+          return_time?: string | null
+          security_deposit_mxn?: number | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          total_days: number
+          total_mxn: number
+          updated_at?: string
+        }
+        Update: {
+          additional_driver?: boolean
+          balance_due_mxn?: number
+          car_id?: string
+          confirmation_number?: string
+          created_at?: string
+          deposit_paid_mxn?: number
+          driver_email?: string
+          driver_name?: string
+          driver_phone?: string | null
+          id?: string
+          notes?: string | null
+          payment_status?: string
+          pickup_date?: string
+          pickup_location?: string | null
+          pickup_time?: string | null
+          price_per_day_mxn?: number
+          return_date?: string
+          return_location?: string | null
+          return_time?: string | null
+          security_deposit_mxn?: number | null
+          status?: string
+          stripe_payment_intent_id?: string | null
+          stripe_session_id?: string | null
+          total_days?: number
+          total_mxn?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "car_bookings_car_id_fkey"
+            columns: ["car_id"]
+            isOneToOne: false
+            referencedRelation: "rental_cars"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       charter_requests: {
         Row: {
           aircraft: string
@@ -827,6 +922,84 @@ export type Database = {
         }
         Relationships: []
       }
+      rental_cars: {
+        Row: {
+          active: boolean
+          air_conditioning: boolean
+          brand: string
+          created_at: string
+          deposit_mxn: number | null
+          description_en: string | null
+          description_es: string | null
+          doors: number
+          features: string[]
+          gallery_urls: string[]
+          id: string
+          image_url: string
+          min_days: number
+          name: string
+          passengers: number
+          price_per_day_mxn: number
+          slug: string
+          sort_order: number
+          transmission: string
+          trim: string | null
+          units_available: number
+          updated_at: string
+          year: number
+        }
+        Insert: {
+          active?: boolean
+          air_conditioning?: boolean
+          brand: string
+          created_at?: string
+          deposit_mxn?: number | null
+          description_en?: string | null
+          description_es?: string | null
+          doors?: number
+          features?: string[]
+          gallery_urls?: string[]
+          id?: string
+          image_url: string
+          min_days?: number
+          name: string
+          passengers: number
+          price_per_day_mxn: number
+          slug: string
+          sort_order?: number
+          transmission?: string
+          trim?: string | null
+          units_available?: number
+          updated_at?: string
+          year: number
+        }
+        Update: {
+          active?: boolean
+          air_conditioning?: boolean
+          brand?: string
+          created_at?: string
+          deposit_mxn?: number | null
+          description_en?: string | null
+          description_es?: string | null
+          doors?: number
+          features?: string[]
+          gallery_urls?: string[]
+          id?: string
+          image_url?: string
+          min_days?: number
+          name?: string
+          passengers?: number
+          price_per_day_mxn?: number
+          slug?: string
+          sort_order?: number
+          transmission?: string
+          trim?: string | null
+          units_available?: number
+          updated_at?: string
+          year?: number
+        }
+        Relationships: []
+      }
       seasonal_pricing: {
         Row: {
           created_at: string
@@ -1110,6 +1283,13 @@ export type Database = {
         Returns: {
           check_in: string
           check_out: string
+        }[]
+      }
+      get_car_blocked_dates: {
+        Args: { p_car_id: string }
+        Returns: {
+          pickup_date: string
+          return_date: string
         }[]
       }
       get_shared_cart: {

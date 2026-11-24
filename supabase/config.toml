@@ -1,12 +1,6 @@
-project_id = "koyqvfvrtwzsbhaiqzju"
-
-[functions.upload-property-images]
-verify_jwt = true
+project_id = "qikiiopqmiwsedpvxjqx"
 
 [functions.send-member-welcome]
-verify_jwt = false
-
-[functions.send-booking-notification]
 verify_jwt = false
 
 [functions.create-booking-checkout]
@@ -52,4 +46,13 @@ verify_jwt = false
 verify_jwt = false
 
 [functions.submit-point-claim]
+verify_jwt = false
+
+[functions.create-yaab-car-checkout]
+verify_jwt = false
+
+[functions.confirm-car-rental-payment]
+verify_jwt = false
+
+[functions.send-car-rental-notification]
 verify_jwt = false

@@ -29,6 +29,7 @@ const translations = {
     transportation: "Transportation",
     flights: "Flights",
     exoticCars: "Exotic Car Rentals",
+    carRentals: "Car Rentals",
     golfCourses: "Golf Courses",
     propertyManagement: "Property Management",
     calculateEarnings: "Calculate Your Earnings",
@@ -50,6 +51,7 @@ const translations = {
     transportation: "Transporte",
     flights: "Vuelos",
     exoticCars: "Autos Exóticos",
+    carRentals: "Renta de Coches",
     golfCourses: "Campos de Golf",
     propertyManagement: "Administración",
     calculateEarnings: "Calcula tus Ganancias",
@@ -277,6 +279,7 @@ export function Navbar({ language, onLanguageChange, forceOpaque = false }: Navb
                       <Link to="/activities/transportation" className={dropdownLinkClasses} onClick={() => setActivitiesOpen(false)}>{t.transportation}</Link>
                       <Link to="/activities/flights" className={dropdownLinkClasses} onClick={() => setActivitiesOpen(false)}>{t.flights}</Link>
                       <Link to="/activities/exotic-cars" className={dropdownLinkClasses} onClick={() => setActivitiesOpen(false)}>{t.exoticCars}</Link>
+                      <Link to="/activities/car-rentals" className={dropdownLinkClasses} onClick={() => setActivitiesOpen(false)}>{t.carRentals}</Link>
                       <Link to="/activities/golf" className={dropdownLinkClasses} onClick={() => setActivitiesOpen(false)}>{t.golfCourses}</Link>
                     </div>
                   </div>
@@ -451,6 +454,7 @@ export function Navbar({ language, onLanguageChange, forceOpaque = false }: Navb
                   <Link to="/activities/transportation" className="w-full px-6 py-3 font-inter font-medium text-white/80 uppercase tracking-[0.1em] text-[13px] transition-all duration-200 ease-out hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.9),0_0_40px_rgba(255,255,255,0.4)] text-center" onClick={() => setMobileMenuOpen(false)}>{t.transportation}</Link>
                   <Link to="/activities/flights" className="w-full px-6 py-3 font-inter font-medium text-white/80 uppercase tracking-[0.1em] text-[13px] transition-all duration-200 ease-out hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.9),0_0_40px_rgba(255,255,255,0.4)] text-center" onClick={() => setMobileMenuOpen(false)}>{t.flights}</Link>
                   <Link to="/activities/exotic-cars" className="w-full px-6 py-3 font-inter font-medium text-white/80 uppercase tracking-[0.1em] text-[13px] transition-all duration-200 ease-out hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.9),0_0_40px_rgba(255,255,255,0.4)] text-center" onClick={() => setMobileMenuOpen(false)}>{t.exoticCars}</Link>
+                  <Link to="/activities/car-rentals" className="w-full px-6 py-3 font-inter font-medium text-white/80 uppercase tracking-[0.1em] text-[13px] transition-all duration-200 ease-out hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.9),0_0_40px_rgba(255,255,255,0.4)] text-center" onClick={() => setMobileMenuOpen(false)}>{t.carRentals}</Link>
                   <Link to="/activities/golf" className="w-full px-6 py-3 font-inter font-medium text-white/80 uppercase tracking-[0.1em] text-[13px] transition-all duration-200 ease-out hover:text-white hover:[text-shadow:0_0_20px_rgba(255,255,255,0.9),0_0_40px_rgba(255,255,255,0.4)] text-center" onClick={() => setMobileMenuOpen(false)}>{t.golfCourses}</Link>
                 </div>
               )}
