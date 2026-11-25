@@ -19,9 +19,9 @@ import { AddressAutocomplete, SelectedPlace } from "@/components/AddressAutocomp
 // ============================================
 // CONFIGURABLE PRICING CONSTANTS (EDIT HERE)
 // ============================================
-const BASE_FEE = 799; // Base fee in MXN
-const KM_RATE = 15; // Price per kilometer in MXN
-const MIN_FARE = 999; // Minimum fare in MXN
+const BASE_FEE = 395; // Base fee in MXN (formula: 395 + 21/km, min fare 899)
+const KM_RATE = 21; // Price per kilometer in MXN
+const MIN_FARE = 899; // Minimum fare in MXN (entry cost for any trip)
 const STOP_FEE = 200; // Fee per extra stop in MXN
 const ROUND_TRIP_MULTIPLIER = 2; // Multiplier for round trips
 // ============================================
