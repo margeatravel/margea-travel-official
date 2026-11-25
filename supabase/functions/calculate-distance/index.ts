@@ -5,6 +5,13 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Direct Google Maps API — no Lovable Connector Gateway.
+// Server API key is read from the environment at runtime (never hardcoded).
+const MAPS_BASE_URL = "https://maps.googleapis.com";
+// Routes API (computeRouteMatrix) lives on routes.googleapis.com — NOT
+// maps.googleapis.com (the old host returns Google's HTML 404 page).
+const ROUTES_BASE_URL = "https://routes.googleapis.com";
+
 interface DistanceRequest {
   pickup: string;
   dropoff: string;
@@ -19,13 +26,13 @@ serve(async (req) => {
     const { pickup, dropoff }: DistanceRequest = await req.json();
     console.log("Calculating distance:", { pickup, dropoff });
 
-    // Direct Google Maps API key (no Lovable gateway).
-    const apiKey = Deno.env.get("GOOGLE_MAPS_API_KEY");
+    const apiKey =
+      Deno.env.get("GOOGLE_MAPS_API_KEY_1") ?? Deno.env.get("GOOGLE_MAPS_API_KEY");
     if (!apiKey) throw new Error("Google Maps API key is not configured");
 
-    // Geocode both addresses via the Geocoding API
+    // Geocode both addresses (legacy Geocoding API, key as query param)
     const geocode = async (address: string) => {
-      const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+      const url = `${MAPS_BASE_URL}/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
       const r = await fetch(url);
       const data = await r.json();
       if (data.status !== "OK" || !data.results?.[0]) {
@@ -69,7 +76,7 @@ serve(async (req) => {
     };
 
     const response = await fetch(
-      "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix",
+      `${ROUTES_BASE_URL}/routes/distanceMatrix/v2:computeRouteMatrix`,
       {
         method: "POST",
         headers: {

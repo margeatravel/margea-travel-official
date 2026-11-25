@@ -5,6 +5,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// Direct Google Maps API — no Lovable Connector Gateway.
+// Server API key is read from the environment at runtime (never hardcoded).
+// Places API (New) lives on places.googleapis.com — NOT maps.googleapis.com
+// (the old host returns Google's HTML 404 page for /places/v1/...).
+const PLACES_BASE_URL = "https://places.googleapis.com";
+
 interface AutocompleteRequest {
   input: string;
   sessionToken?: string;
@@ -21,8 +27,8 @@ serve(async (req) => {
   }
 
   try {
-    // Direct Google Maps API key (no Lovable gateway).
-    const apiKey = Deno.env.get("GOOGLE_MAPS_API_KEY");
+    const apiKey =
+      Deno.env.get("GOOGLE_MAPS_API_KEY_1") ?? Deno.env.get("GOOGLE_MAPS_API_KEY");
     if (!apiKey) throw new Error("Google Maps API key is not configured");
 
     const url = new URL(req.url);
@@ -46,13 +52,11 @@ serve(async (req) => {
       };
       if (sessionToken) body.sessionToken = sessionToken;
 
-      const response = await fetch("https://places.googleapis.com/v1/places:autocomplete", {
+      const response = await fetch(`${PLACES_BASE_URL}/places/v1/places:autocomplete`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask":
-            "suggestions.placePrediction.placeId,suggestions.placePrediction.text,suggestions.placePrediction.structuredFormat.mainText,suggestions.placePrediction.structuredFormat.secondaryText",
         },
         body: JSON.stringify(body),
       });
@@ -89,7 +93,7 @@ serve(async (req) => {
 
       console.log("Place details (New) request:", { placeId });
 
-      const detailsUrl = new URL(`https://places.googleapis.com/v1/places/${placeId}`);
+      const detailsUrl = new URL(`${PLACES_BASE_URL}/places/v1/places/${placeId}`);
       if (sessionToken) detailsUrl.searchParams.set("sessionToken", sessionToken);
 
       const response = await fetch(detailsUrl.toString(), {
