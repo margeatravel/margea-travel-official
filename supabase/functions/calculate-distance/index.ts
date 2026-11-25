@@ -89,12 +89,16 @@ serve(async (req) => {
       }
     );
 
-    const data = await response.json();
-    console.log("Routes API status:", response.status, JSON.stringify(data).slice(0, 500));
+    // Read as text first: Google returns an HTML error page (not JSON)
+    // for wrong hosts/keys, and response.json() on HTML hides the cause.
+    const rawText = await response.text();
+    console.log("Routes API status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
 
     if (!response.ok) {
-      throw new Error(`Routes API error ${response.status}: ${JSON.stringify(data)}`);
+      throw new Error(`Routes API error ${response.status}: ${rawText.slice(0, 500)}`);
     }
+
+    const data = JSON.parse(rawText);
 
     // Response may be an array of elements or a single object
     const elements = Array.isArray(data) ? data : [data];

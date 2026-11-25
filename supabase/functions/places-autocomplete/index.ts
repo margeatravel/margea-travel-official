@@ -61,14 +61,18 @@ serve(async (req) => {
         body: JSON.stringify(body),
       });
 
-      const data = await response.json();
-      console.log("Autocomplete (New) status:", response.status);
+      // Read as text first: Google returns an HTML error page (not JSON)
+      // for wrong hosts/keys, and response.json() on HTML hides the cause.
+      const rawText = await response.text();
+      console.log("Autocomplete (New) status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
 
       if (!response.ok) {
         throw new Error(
-          `Places API (New) error ${response.status}: ${JSON.stringify(data)}`
+          `Places API (New) error ${response.status}: ${rawText.slice(0, 500)}`
         );
       }
+
+      const data = JSON.parse(rawText);
 
       const predictions = (data.suggestions || [])
         .map((s: any) => s.placePrediction)
@@ -104,14 +108,16 @@ serve(async (req) => {
         },
       });
 
-      const data = await response.json();
-      console.log("Details (New) status:", response.status);
+      const rawText = await response.text();
+      console.log("Details (New) status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
 
       if (!response.ok) {
         throw new Error(
-          `Place Details (New) error ${response.status}: ${JSON.stringify(data)}`
+          `Place Details (New) error ${response.status}: ${rawText.slice(0, 500)}`
         );
       }
+
+      const data = JSON.parse(rawText);
 
       return new Response(
         JSON.stringify({
