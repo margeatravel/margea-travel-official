@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { differenceInDays, eachDayOfInterval, format } from "date-fns";
 import { DateRange } from "react-day-picker";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { ShieldCheck, Info } from "lucide-react";
 import { useCurrency } from "@/hooks/use-currency";
@@ -63,6 +64,11 @@ const translations = {
     checkoutError: "Failed to initiate payment",
     pickupDateLabel: "Pickup date",
     returnDateLabel: "Return date",
+    acceptTermsStart: "I have read and accept the",
+    termsLink: "rental Terms & Conditions",
+    acceptTermsAnd: "and the",
+    privacyLink: "Privacy Notice",
+    acceptTermsError: "Please accept the rental terms and privacy notice to continue",
   },
   es: {
     title: "Reserva este auto",
@@ -101,6 +107,11 @@ const translations = {
     checkoutError: "No se pudo iniciar el pago",
     pickupDateLabel: "Fecha de entrega",
     returnDateLabel: "Fecha de devolución",
+    acceptTermsStart: "Leí y acepto los",
+    termsLink: "Términos y Condiciones de la renta",
+    acceptTermsAnd: "y el",
+    privacyLink: "Aviso de Privacidad",
+    acceptTermsError: "Acepta los términos y el aviso de privacidad para continuar",
   },
 };
 
@@ -124,6 +135,7 @@ export function CarBookingCalendar({ car, language }: CarBookingCalendarProps) {
   const [pickupLocation, setPickupLocation] = useState(pickupLocations[language][0]);
   const [returnLocation, setReturnLocation] = useState(pickupLocations[language][0]);
   const [additionalDriver, setAdditionalDriver] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [notes, setNotes] = useState("");
   const { formatPrice } = useCurrency();
   const t = translations[language];
@@ -211,6 +223,10 @@ export function CarBookingCalendar({ car, language }: CarBookingCalendarProps) {
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(driverEmail.trim())) {
       toast.error(t.invalidEmail);
+      return;
+    }
+    if (!acceptedTerms) {
+      toast.error(t.acceptTermsError);
       return;
     }
 
@@ -483,6 +499,37 @@ export function CarBookingCalendar({ car, language }: CarBookingCalendarProps) {
               placeholder={t.notesPlaceholder}
             />
           </div>
+        </div>
+
+        {/* Terms acceptance */}
+        <div className="flex items-start gap-2 text-sm">
+          <input
+            type="checkbox"
+            id="accept-terms"
+            checked={acceptedTerms}
+            onChange={(e) => setAcceptedTerms(e.target.checked)}
+            className="mt-0.5 h-4 w-4 accent-primary shrink-0"
+          />
+          <span className="text-muted-foreground">
+            {t.acceptTermsStart}{" "}
+            <Link
+              to="/activities/car-rentals/terms"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline"
+            >
+              {t.termsLink}
+            </Link>{" "}
+            {t.acceptTermsAnd}{" "}
+            <Link
+              to="/activities/car-rentals/privacy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline"
+            >
+              {t.privacyLink}
+            </Link>
+          </span>
         </div>
 
         <Button

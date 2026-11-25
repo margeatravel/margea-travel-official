@@ -37,6 +37,8 @@ const translations = {
       "Return the car with the same fuel level. Late return may carry an extra charge.",
       "Cancellation less than 24h before delivery: the deposit is not refundable.",
     ],
+    fullTermsLink: "Read the full rental Terms & Conditions",
+    privacyLink: "Car rental Privacy Notice",
     operatedBy: "Operated by YAAB Rental Car Cancún",
     notFound: "Car not found",
     notFoundText: "This car is no longer available.",
@@ -66,6 +68,8 @@ const translations = {
       "Devolver el auto con el mismo nivel de gasolina. La devolución tardía puede tener cargo extra.",
       "Cancelación con menos de 24 h antes de la entrega: el anticipo no es reembolsable.",
     ],
+    fullTermsLink: "Leer los Términos y Condiciones completos de la renta",
+    privacyLink: "Aviso de Privacidad de renta de coches",
     operatedBy: "Operado por YAAB Rental Car Cancún",
     notFound: "Auto no encontrado",
     notFoundText: "Este auto ya no está disponible.",
@@ -255,6 +259,14 @@ const CarRentalDetail = () => {
                   <li key={req}>{req}</li>
                 ))}
               </ul>
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/activities/car-rentals/terms">{t.fullTermsLink}</Link>
+                </Button>
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/activities/car-rentals/privacy">{t.privacyLink}</Link>
+                </Button>
+              </div>
             </div>
           </div>
 

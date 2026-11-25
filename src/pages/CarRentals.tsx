@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CarCard } from "@/components/CarCard";
@@ -31,6 +32,8 @@ const translations = {
       "18+ years old, valid driver's license and official ID (INE or passport).",
       "Refundable security deposit depends on the vehicle and is informed before delivery.",
     ],
+    fullTermsLink: "Read the full rental Terms & Conditions",
+    privacyLink: "Car rental Privacy Notice",
     contact: "Contact Us",
     email: "admin@margeatravel.com",
     phone: "+52 998 233 4867",
@@ -54,6 +57,8 @@ const translations = {
       "18 años o más, licencia de conducir vigente e identificación oficial (INE o pasaporte).",
       "El depósito en garantía reembolsable depende del vehículo y se informa antes de la entrega.",
     ],
+    fullTermsLink: "Leer los Términos y Condiciones completos de la renta",
+    privacyLink: "Aviso de Privacidad de renta de coches",
     contact: "Contáctanos",
     email: "admin@margeatravel.com",
     phone: "+52 998 233 4867",
@@ -192,6 +197,14 @@ const CarRentals = () => {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 flex flex-col sm:flex-row gap-2 justify-center">
+              <Button variant="outline" asChild>
+                <Link to="/activities/car-rentals/terms">{t.fullTermsLink}</Link>
+              </Button>
+              <Button variant="outline" asChild>
+                <Link to="/activities/car-rentals/privacy">{t.privacyLink}</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>

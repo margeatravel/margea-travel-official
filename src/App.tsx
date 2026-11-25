@@ -89,6 +89,8 @@ import CharterRequest from "./pages/CharterRequest";
 import ExoticCarRentals from "./pages/ExoticCarRentals";
 import CarRentals from "./pages/CarRentals";
 import CarRentalDetail from "./pages/CarRentalDetail";
+import CarRentalTerms from "./pages/CarRentalTerms";
+import CarRentalPrivacy from "./pages/CarRentalPrivacy";
 import CarRentalBookingSuccess from "./pages/CarRentalBookingSuccess";
 import GolfCourses from "./pages/GolfCourses";
 import GolfCourseDetail from "./pages/GolfCourseDetail";
@@ -202,6 +204,8 @@ const App = () => {
               <Route path="/activities/exotic-cars" element={<ExoticCarRentals />} />
               <Route path="/activities/car-rentals" element={<CarRentals />} />
               <Route path="/activities/car-rentals/booking-success" element={<CarRentalBookingSuccess />} />
+              <Route path="/activities/car-rentals/terms" element={<CarRentalTerms />} />
+              <Route path="/activities/car-rentals/privacy" element={<CarRentalPrivacy />} />
               <Route path="/activities/car-rentals/:slug" element={<CarRentalDetail />} />
               <Route path="/activities/golf" element={<GolfCourses />} />
               <Route path="/activities/golf/booking-success" element={<GolfBookingSuccess />} />
