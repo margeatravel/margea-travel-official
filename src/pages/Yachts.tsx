@@ -4,6 +4,7 @@ import { YachtCard } from "@/components/YachtCard";
 import { useLanguage } from "@/components/LanguageToggle";
 import { yachts } from "@/data/yachts-data";
 import { ActivityHero } from "@/components/ActivityHero";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -27,7 +28,7 @@ export default function Yachts() {
       <ActivityHero
         title={t.title}
         subtitle={t.subtitle}
-        backgroundImage="/yacht-images/yacht-hero.jpg"
+        backgroundImage={media("/yacht-images/yacht-hero.jpg")}
       />
       
       <section className="py-16 bg-muted/50">

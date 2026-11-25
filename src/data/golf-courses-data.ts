@@ -1,3 +1,4 @@
+import { media } from "@/lib/media";
 export interface GolfPricing {
   label: string;
   price: number;
@@ -40,8 +41,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "One of Mexico's most iconic championship courses. Host of PGA Tour and LIV Golf events.",
     description: "El Camaleón is a Greg Norman masterpiece carved through jungle, mangroves, canals, and a stunning Caribbean oceanfront stretch. As the only PGA Tour venue in Mexico, it delivers world-class conditioning and an unforgettable finishing sequence along the sea. Every hole presents a unique challenge shaped by natural terrain and coastal winds.",
     highlights: ["PGA Tour venue", "Oceanfront finishing hole", "Championship conditioning"],
-    image: "/golf-images/el-camaleon-mayakoba.png",
-    galleryImages: ["/golf-images/el-camaleon-mayakoba.png"],
+    image: media("/golf-images/el-camaleon-mayakoba.png"),
+    galleryImages: [media("/golf-images/el-camaleon-mayakoba.png")],
     reviews: [
       { text: "Absolutely world-class. The oceanfront holes are breathtaking.", author: "James R.", handicap: "8" },
       { text: "Greens were lightning fast — brought my A-game and still got humbled.", author: "Carlos M.", handicap: "12" },
@@ -66,8 +67,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "The only PGA-branded course in the region. Jungle layout with elevation changes and technical bunkering.",
     description: "PGA Riviera Maya is a Robert Trent Jones II design that winds through dense Yucatán jungle with surprising elevation changes. The strategic bunkering and large, undulating greens demand precision. As the region's only PGA-certified experience, it delivers tournament-level conditioning in a spectacular natural setting.",
     highlights: ["PGA-certified experience", "Tournament host", "Strategic design"],
-    image: "/golf-images/pga-riviera-maya.png",
-    galleryImages: ["/golf-images/pga-riviera-maya.png"],
+    image: media("/golf-images/pga-riviera-maya.png"),
+    galleryImages: [media("/golf-images/pga-riviera-maya.png")],
     reviews: [
       { text: "Tough but fair. The elevation changes keep you on your toes.", author: "Mark S.", handicap: "10" },
       { text: "Best-maintained course I played in Mexico. Smooth greens.", author: "Robert L.", handicap: "7" },
@@ -91,8 +92,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Championship course blending coastal dunes and tropical vegetation within a luxury gated community.",
     description: "Another Greg Norman signature, Playa Mujeres weaves through coastal dunes, wetlands, and tropical gardens inside one of the region's most exclusive residential communities. Ocean breezes add a strategic layer to an already demanding layout. The clubhouse and amenities match the resort-level surroundings.",
     highlights: ["Ocean views", "Resort-level amenities", "Elite residential setting"],
-    image: "/golf-images/playa-mujeres.jpg",
-    galleryImages: ["/golf-images/playa-mujeres.jpg"],
+    image: media("/golf-images/playa-mujeres.jpg"),
+    galleryImages: [media("/golf-images/playa-mujeres.jpg")],
     reviews: [
       { text: "Wind off the ocean makes club selection critical. Loved it.", author: "Brian T.", handicap: "9" },
       { text: "Greens were fast and fairways in excellent shape.", author: "Miguel A.", handicap: "11" },
@@ -115,8 +116,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Modern layout combining marina views, Caribbean Sea backdrops, and mangrove-lined fairways.",
     description: "Tom Weiskopf designed this modern layout to make the most of its stunning surroundings — marina views on one side, Caribbean Sea on the other, and mangrove-lined fairways throughout. Located minutes from downtown Cancún, it offers a premium golf experience without the long drive. The luxury clubhouse completes the package.",
     highlights: ["Marina & ocean holes", "Prime central location", "Luxury clubhouse"],
-    image: "/golf-images/puerto-cancun.jpg",
-    galleryImages: ["/golf-images/puerto-cancun.jpg"],
+    image: media("/golf-images/puerto-cancun.jpg"),
+    galleryImages: [media("/golf-images/puerto-cancun.jpg")],
     reviews: [
       { text: "Incredible views from almost every hole. Well worth it.", author: "Chris B.", handicap: "13" },
       { text: "Great service and smooth tee time experience.", author: "Laura M.", handicap: "20" },
@@ -139,8 +140,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "One of the longest and most challenging courses in the region. Designed for competitive-level play.",
     description: "Nick Price's El Tinto stretches over 7,400 yards, making it one of the longest and most demanding layouts in the Mexican Caribbean. Strategic water hazards and well-placed bunkers test every club in the bag. It's a favorite among serious golfers looking for a genuine championship test without the resort premium.",
     highlights: ["Strategic water hazards", "Championship length", "Residential community"],
-    image: "/golf-images/el-tinto.jpg",
-    galleryImages: ["/golf-images/el-tinto.jpg"],
+    image: media("/golf-images/el-tinto.jpg"),
+    galleryImages: [media("/golf-images/el-tinto.jpg")],
     reviews: [
       { text: "Tough back nine, but I managed a birdie on 17.", author: "Ryan K.", handicap: "6" },
       { text: "Longest course I've played down here. Bring your driver.", author: "Paul W.", handicap: "10" },
@@ -163,8 +164,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Technical course with elevation changes, deep bunkers, and visually demanding carries.",
     description: "P.B. Dye brought his signature style to the Riviera Maya with this technical gem. Dramatic elevation changes, deep pot bunkers, and forced carries over wetlands keep you engaged from the first tee. It's shorter than some neighbors but demands precision and course management at every turn.",
     highlights: ["Dye-style layout", "Challenging greens", "Resort access"],
-    image: "/golf-images/iberostar-paraiso.png",
-    galleryImages: ["/golf-images/iberostar-paraiso.png"],
+    image: media("/golf-images/iberostar-paraiso.png"),
+    galleryImages: [media("/golf-images/iberostar-paraiso.png")],
     reviews: [
       { text: "Don't let the yardage fool you — this course bites.", author: "Frank H.", handicap: "11" },
       { text: "Greens are tricky. Read them twice before putting.", author: "Martin L.", handicap: "8" },
@@ -188,8 +189,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Oceanfront course with stunning Caribbean views and strategic yet enjoyable play.",
     description: "Designed by Japanese golf legend Isao Aoki, this oceanfront course in the heart of Cancún's Hotel Zone offers direct Caribbean views and a balanced layout that's enjoyable for all skill levels. The sea breeze adds challenge, but the wide fairways welcome confident swings. It's the most accessible premium course in the zone.",
     highlights: ["Direct ocean views", "Central hotel zone location", "Popular international course"],
-    image: "/golf-images/iberostar-cancun.jpg",
-    galleryImages: ["/golf-images/iberostar-cancun.jpg"],
+    image: media("/golf-images/iberostar-cancun.jpg"),
+    galleryImages: [media("/golf-images/iberostar-cancun.jpg")],
     reviews: [
       { text: "Best ocean views of any course in Cancún. Period.", author: "Lisa T.", handicap: "18" },
       { text: "Forgiving enough for a fun round, challenging enough to stay sharp.", author: "Jason P.", handicap: "14" },
@@ -212,8 +213,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Premium jungle course inside Corasol community with strong routing and balanced playability.",
     description: "Nick Price's second design in the region sits inside the prestigious Corasol community. The routing flows naturally through dense jungle with strategic doglegs and well-protected greens. It strikes an excellent balance between challenge and playability, rewarding smart course management over raw power.",
     highlights: ["Luxury residential setting", "Tropical scenery", "Strategic layout"],
-    image: "/golf-images/gran-coyote.png",
-    galleryImages: ["/golf-images/gran-coyote.png"],
+    image: media("/golf-images/gran-coyote.png"),
+    galleryImages: [media("/golf-images/gran-coyote.png")],
     reviews: [
       { text: "Excellent routing. Every hole feels purposeful.", author: "Greg N.", handicap: "7" },
       { text: "The jungle setting is gorgeous. Saw monkeys on the 12th.", author: "Rachel W.", handicap: "16" },
@@ -236,8 +237,8 @@ export const golfCourses: GolfCourse[] = [
     overview: "Nicklaus Signature design featuring wetlands, coastal winds, and technical finishing holes.",
     description: "A Jack Nicklaus Signature course that uses the natural wetland terrain and coastal winds to create a demanding yet fair test of golf. The finishing stretch is among the most technical in the region, requiring precision off the tee and around the greens. Nicklaus's trademark risk-reward design philosophy is on full display.",
     highlights: ["Nicklaus design", "Scenic water features", "Resort appeal"],
-    image: "/golf-images/riviera-cancun.jpg",
-    galleryImages: ["/golf-images/riviera-cancun.jpg"],
+    image: media("/golf-images/riviera-cancun.jpg"),
+    galleryImages: [media("/golf-images/riviera-cancun.jpg")],
     reviews: [
       { text: "Nicklaus design at its finest. The finishing holes are intense.", author: "Phil C.", handicap: "5" },
       { text: "Beautiful wetland scenery and great risk-reward holes.", author: "Juan E.", handicap: "12" },

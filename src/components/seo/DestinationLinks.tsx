@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { media } from "@/lib/media";
 
 interface DestinationLinksProps {
   language: "en" | "es";
@@ -48,13 +49,13 @@ const translations = {
 };
 
 const destinations = [
-  { id: "akumal", href: "/stays/akumal", titleKey: "akumal" as const, descKey: "akumalDesc" as const, image: "/property-images/akumal-u7-1.jpg" },
-  { id: "tulum", href: "/stays/tulum", titleKey: "tulum" as const, descKey: "tulumDesc" as const, image: "/property-images/tulum-1.jpg" },
-  { id: "playa-del-carmen", href: "/stays/playa-del-carmen", titleKey: "playaDelCarmen" as const, descKey: "playaDelCarmenDesc" as const, image: "/property-images/nickprice-1.jpg" },
-  { id: "cancun", href: "/stays/cancun", titleKey: "cancun" as const, descKey: "cancunDesc" as const, image: "/property-images/cancun-estate-1.jpg" },
-  { id: "puerto-morelos", href: "/stays/puerto-morelos", titleKey: "puertoMorelos" as const, descKey: "puertoMorelosDesc" as const, image: "/property-images/puerto-morelos-1.jpg" },
-  { id: "isla-mujeres", href: "/stays/isla-mujeres", titleKey: "islaMujeres" as const, descKey: "islaMujeresDesc" as const, image: "/property-images/isla-mujeres-1.jpg" },
-  { id: "all", href: "/stays", titleKey: "allStays" as const, descKey: "allStaysDesc" as const, image: "/property-images/cancun-estate-1.jpg" },
+  { id: "akumal", href: "/stays/akumal", titleKey: "akumal" as const, descKey: "akumalDesc" as const, image: media("/property-images/akumal-u7-1.jpg") },
+  { id: "tulum", href: "/stays/tulum", titleKey: "tulum" as const, descKey: "tulumDesc" as const, image: media("/property-images/tulum-1.jpg") },
+  { id: "playa-del-carmen", href: "/stays/playa-del-carmen", titleKey: "playaDelCarmen" as const, descKey: "playaDelCarmenDesc" as const, image: media("/property-images/nickprice-1.jpg") },
+  { id: "cancun", href: "/stays/cancun", titleKey: "cancun" as const, descKey: "cancunDesc" as const, image: media("/property-images/cancun-estate-1.jpg") },
+  { id: "puerto-morelos", href: "/stays/puerto-morelos", titleKey: "puertoMorelos" as const, descKey: "puertoMorelosDesc" as const, image: media("/property-images/puerto-morelos-1.jpg") },
+  { id: "isla-mujeres", href: "/stays/isla-mujeres", titleKey: "islaMujeres" as const, descKey: "islaMujeresDesc" as const, image: media("/property-images/isla-mujeres-1.jpg") },
+  { id: "all", href: "/stays", titleKey: "allStays" as const, descKey: "allStaysDesc" as const, image: media("/property-images/cancun-estate-1.jpg") },
 ];
 
 export function DestinationLinks({ language, excludeCurrent }: DestinationLinksProps) {

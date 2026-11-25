@@ -9,18 +9,19 @@ import { Star, Clock, Globe, Bus, ArrowLeft, Check, X } from "lucide-react";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 const chichenGalleryImages = [
-  "/tour-images/chichen-itza-pyramid.jpg",   // Cover image first
-  "/tour-images/chichen-itza-kukulkan.jpg",   // chichen03
-  "/tour-images/chichen-itza-aerial.jpg",     // chichen02
-  "/tour-images/chichen-itza-cenote-1.jpg",
-  "/tour-images/chichen-itza-cenote-2.jpg",
-  "/tour-images/chichen-itza-valladolid.jpg",
+  media("/tour-images/chichen-itza-pyramid.jpg"),   // Cover image first
+  media("/tour-images/chichen-itza-kukulkan.jpg"),   // chichen03
+  media("/tour-images/chichen-itza-aerial.jpg"),     // chichen02
+  media("/tour-images/chichen-itza-cenote-1.jpg"),
+  media("/tour-images/chichen-itza-cenote-2.jpg"),
+  media("/tour-images/chichen-itza-valladolid.jpg"),
 ];
 import { useState } from "react";
 import { chichenItzaTour, ChichenItzaVariant } from "@/data/chichenItzaTour";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TourBookingModule } from "@/components/tours/TourBookingModule";
 import { getTourPricing } from "@/data/toursPricing";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {

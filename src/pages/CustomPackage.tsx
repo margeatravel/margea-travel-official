@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -177,7 +178,7 @@ export default function CustomPackage() {
       <section className="relative pt-16 min-h-[40vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <img
-            src="/yacht-images/yacht-hero-1.jpg"
+            src={media("/yacht-images/yacht-hero-1.jpg")}
             alt="Customize Your Package"
             loading="eager"
             decoding="async"

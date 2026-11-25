@@ -1,5 +1,6 @@
 // Dolphin Tour data — prices derived from toursPricing.ts (single source of truth)
 import { getVariantPricing } from "./toursPricing";
+import { media } from "@/lib/media";
 
 export interface DolphinTourVariant {
   id: string;
@@ -28,13 +29,13 @@ export interface DolphinTourData {
 export const dolphinTour: DolphinTourData = {
   slug: "dolphin-swim-experience",
   title: "Dolphin Swim Experience",
-  cardImage: "/tour-images/dolphin-tulum-5.jpg",
+  cardImage: media("/tour-images/dolphin-tulum-5.jpg"),
   galleryImages: [
-    "/tour-images/dolphin-tulum-5.jpg",
-    "/tour-images/dolphin-tulum-1.jpg",
-    "/tour-images/dolphin-tulum-2.jpg",
-    "/tour-images/dolphin-tulum-4.jpg",
-    "/tour-images/dolphin-tulum-6.jpg",
+    media("/tour-images/dolphin-tulum-5.jpg"),
+    media("/tour-images/dolphin-tulum-1.jpg"),
+    media("/tour-images/dolphin-tulum-2.jpg"),
+    media("/tour-images/dolphin-tulum-4.jpg"),
+    media("/tour-images/dolphin-tulum-6.jpg"),
   ],
   variants: [
     {

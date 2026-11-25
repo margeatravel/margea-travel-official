@@ -1,3 +1,4 @@
+import { media } from "@/lib/media";
 // YAAB Rental Car Cancún fleet — Margea Travel "Renta de Coches".
 // Prices are the exact "Desde" daily rates from yaabcar.mx (24 Nov 2026).
 // Total = days x price_per_day. NO duration discount is applied: YAAB's
@@ -46,7 +47,7 @@ export const yaabCarsSeed: YaabCar[] = [
     depositMxn: 5000,
     minDays: 3,
     unitsAvailable: 1,
-    imageUrl: "/yaab-cars/jac_sei_8_2025_roja.png",
+    imageUrl: media("/yaab-cars/jac_sei_8_2025_roja.png"),
     galleryUrls: [],
     description:
       "Roomy 7-passenger family SUV, ideal for group trips around Cancún and the Riviera Maya.",
@@ -71,7 +72,7 @@ export const yaabCarsSeed: YaabCar[] = [
     depositMxn: null,
     minDays: 3,
     unitsAvailable: 1,
-    imageUrl: "/yaab-cars/susuki_ertiga_2026_beige.png",
+    imageUrl: media("/yaab-cars/susuki_ertiga_2026_beige.png"),
     galleryUrls: [],
     description:
       "Comfortable 7-passenger family minivan, practical for families and groups.",
@@ -96,7 +97,7 @@ export const yaabCarsSeed: YaabCar[] = [
     depositMxn: null,
     minDays: 3,
     unitsAvailable: 1,
-    imageUrl: "/yaab-cars/dodge_attitude_2022_plata.png",
+    imageUrl: media("/yaab-cars/dodge_attitude_2022_plata.png"),
     galleryUrls: [],
     description:
       "Economical automatic sedan, practical for getting around the city.",

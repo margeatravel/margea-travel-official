@@ -9,15 +9,16 @@ import { Star, Clock, Globe, Bus, ArrowLeft, Check, X, MapPin, Users } from "luc
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 
 const akumalGalleryImages = [
-  "/tour-images/akumal-turtle-2.jpg",      // Cover (turtleakumal02)
-  "/tour-images/akumal-turtle-cover.jpg",   // Original cover kept in carousel
-  "/tour-images/akumal-turtle-1.jpg",
-  "/tour-images/akumal-turtle-3.jpg",
-  "/tour-images/akumal-beach.jpg",
+  media("/tour-images/akumal-turtle-2.jpg"),      // Cover (turtleakumal02)
+  media("/tour-images/akumal-turtle-cover.jpg"),   // Original cover kept in carousel
+  media("/tour-images/akumal-turtle-1.jpg"),
+  media("/tour-images/akumal-turtle-3.jpg"),
+  media("/tour-images/akumal-beach.jpg"),
 ];
 import { akumalTour } from "@/data/akumalTour";
 import { TourBookingModule } from "@/components/tours/TourBookingModule";
 import { getTourPricing } from "@/data/toursPricing";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {

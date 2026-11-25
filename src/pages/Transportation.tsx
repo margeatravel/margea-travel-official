@@ -8,6 +8,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { CustomRouteSection } from "@/components/CustomRouteSection";
 import { ActivityHero } from "@/components/ActivityHero";
+import { media } from "@/lib/media";
 
 type Language = 'en' | 'es';
 
@@ -83,7 +84,7 @@ const Transportation = () => {
       <ActivityHero
         title={t.heroTitle}
         subtitle={t.heroSubtitle}
-        backgroundImage="/transportation/van-fleet.jpg"
+        backgroundImage={media("/transportation/van-fleet.jpg")}
       >
         <div className="flex justify-center">
           <Button 
@@ -131,12 +132,12 @@ const Transportation = () => {
 };
 
 const fleetImages = [
-  { src: "/transportation/van-1.jpg", alt: "Margea Transportation Fleet" },
-  { src: "/transportation/van-2.jpg", alt: "Margea Transportation Vans" },
-  { src: "/transportation/van-3.jpg", alt: "Premium interior with entertainment screens" },
-  { src: "/transportation/van-4.jpg", alt: "Black Suburban front view with palm trees" },
-  { src: "/transportation/van-5.jpg", alt: "Suburban at luxury hotel entrance" },
-  { src: "/transportation/van-6.jpg", alt: "Suburban on beach road" },
+  { src: media("/transportation/van-1.jpg"), alt: "Margea Transportation Fleet" },
+  { src: media("/transportation/van-2.jpg"), alt: "Margea Transportation Vans" },
+  { src: media("/transportation/van-3.jpg"), alt: "Premium interior with entertainment screens" },
+  { src: media("/transportation/van-4.jpg"), alt: "Black Suburban front view with palm trees" },
+  { src: media("/transportation/van-5.jpg"), alt: "Suburban at luxury hotel entrance" },
+  { src: media("/transportation/van-6.jpg"), alt: "Suburban on beach road" },
 ];
 
 const FleetCarousel = ({ fleetTitle, fleetCaption }: { fleetTitle: string; fleetCaption: string }) => {

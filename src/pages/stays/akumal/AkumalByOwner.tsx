@@ -14,6 +14,7 @@ import { CTASection } from "@/components/seo/CTASection";
 import { AkumalSchemaMarkup } from "@/components/seo/AkumalSchemaMarkup";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Info, DollarSign } from "lucide-react";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -112,7 +113,7 @@ export default function AkumalByOwner() {
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/property-images/akumal-u7-1.jpg')" }}
+          style={{ backgroundImage: "url(media('/property-images/akumal-u7-1.jpg'))" }}
         />
         <div className="absolute inset-0 bg-black/40" />
         <div className="relative z-10 text-center text-white px-4">

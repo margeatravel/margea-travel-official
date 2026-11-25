@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from "lucide-react";
+import { media } from "@/lib/media";
 
 interface DestinationsSectionProps {
   language: "en" | "es";
@@ -26,12 +27,12 @@ const translations = {
 };
 
 const destinations = [
-  { id: "akumal", name: "Akumal", desc: "Swim with sea turtles", descEs: "Nada con tortugas marinas", href: "/stays/akumal", image: "/property-images/akumal-u7-1.jpg", available: true },
-  { id: "tulum", name: "Tulum", desc: "Beach clubs & ruins", descEs: "Beach clubs y ruinas", href: "/stays/tulum", image: "/property-images/tulum-1.jpg", available: true },
-  { id: "playa", name: "Playa del Carmen", desc: "Fifth Avenue nightlife", descEs: "Vida nocturna en 5ta", href: "/stays/playa-del-carmen", image: "/property-images/nickprice-1.jpg", available: true },
-  { id: "cancun", name: "Cancun", desc: "World-famous beaches", descEs: "Playas famosas mundiales", href: "/stays/cancun", image: "/property-images/cancun-estate-1.jpg", available: true },
-  { id: "puerto-morelos", name: "Puerto Morelos", desc: "Hidden gem charm", descEs: "Encanto escondido", href: "/stays/puerto-morelos", image: "/property-images/puerto-morelos-1.jpg", available: true },
-  { id: "isla-mujeres", name: "Isla Mujeres", desc: "Island paradise", descEs: "Paraíso isleño", href: "/stays/isla-mujeres", image: "/property-images/isla-mujeres-1.jpg", available: true },
+  { id: "akumal", name: "Akumal", desc: "Swim with sea turtles", descEs: "Nada con tortugas marinas", href: "/stays/akumal", image: media("/property-images/akumal-u7-1.jpg"), available: true },
+  { id: "tulum", name: "Tulum", desc: "Beach clubs & ruins", descEs: "Beach clubs y ruinas", href: "/stays/tulum", image: media("/property-images/tulum-1.jpg"), available: true },
+  { id: "playa", name: "Playa del Carmen", desc: "Fifth Avenue nightlife", descEs: "Vida nocturna en 5ta", href: "/stays/playa-del-carmen", image: media("/property-images/nickprice-1.jpg"), available: true },
+  { id: "cancun", name: "Cancun", desc: "World-famous beaches", descEs: "Playas famosas mundiales", href: "/stays/cancun", image: media("/property-images/cancun-estate-1.jpg"), available: true },
+  { id: "puerto-morelos", name: "Puerto Morelos", desc: "Hidden gem charm", descEs: "Encanto escondido", href: "/stays/puerto-morelos", image: media("/property-images/puerto-morelos-1.jpg"), available: true },
+  { id: "isla-mujeres", name: "Isla Mujeres", desc: "Island paradise", descEs: "Paraíso isleño", href: "/stays/isla-mujeres", image: media("/property-images/isla-mujeres-1.jpg"), available: true },
 ];
 
 export function DestinationsGridSection({ language }: DestinationsSectionProps) {

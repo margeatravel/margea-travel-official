@@ -23,6 +23,7 @@ import {
 import { TourBookingModule } from "@/components/tours/TourBookingModule";
 import { getTourPricing } from "@/data/toursPricing";
 import { whaleSharkCover, whaleSharkGallery } from "@/data/whaleSharkImages";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -643,14 +644,14 @@ const getTours = (language: "en" | "es"): Array<{
     id: "extreme-adventuring",
     image: tourExtremeAtv,
     galleryImages: [
-      "/tour-images/extreme-adventuring-1.png",
-      "/tour-images/extreme-adventuring-2.png",
-      "/tour-images/extreme-adventuring-3.png",
-      "/tour-images/extreme-adventuring-4.png",
-      "/tour-images/extreme-adventuring-5.png",
-      "/tour-images/extreme-adventuring-6.png",
-      "/tour-images/extreme-adventuring-7.png",
-      "/tour-images/extreme-adventuring-8.png"
+      media("/tour-images/extreme-adventuring-1.png"),
+      media("/tour-images/extreme-adventuring-2.png"),
+      media("/tour-images/extreme-adventuring-3.png"),
+      media("/tour-images/extreme-adventuring-4.png"),
+      media("/tour-images/extreme-adventuring-5.png"),
+      media("/tour-images/extreme-adventuring-6.png"),
+      media("/tour-images/extreme-adventuring-7.png"),
+      media("/tour-images/extreme-adventuring-8.png")
     ],
     ...tourContent[language]["extreme-adventuring"],
     rating: 5.0,
@@ -662,10 +663,10 @@ const getTours = (language: "en" | "es"): Array<{
     id: "extreme-horseback-riding",
     image: tourHorseback,
     galleryImages: [
-      "/tour-images/horseback-cover.jpg",
-      "/tour-images/horseback-1.png",
-      "/tour-images/horseback-2.png",
-      "/tour-images/horseback-3.png"
+      media("/tour-images/horseback-cover.jpg"),
+      media("/tour-images/horseback-1.png"),
+      media("/tour-images/horseback-2.png"),
+      media("/tour-images/horseback-3.png")
     ],
     ...tourContent[language]["extreme-horseback-riding"],
     rating: 4.6,
@@ -677,12 +678,12 @@ const getTours = (language: "en" | "es"): Array<{
     id: "cenote-adventuring",
     image: tourCenoteWaterfall,
     galleryImages: [
-      "/tour-images/cenote-1.png",
-      "/tour-images/cenote-cover.jpg",
-      "/tour-images/cenote-2.png",
-      "/tour-images/cenote-3.png",
-      "/tour-images/cenote-4.png",
-      "/tour-images/cenote-5.png"
+      media("/tour-images/cenote-1.png"),
+      media("/tour-images/cenote-cover.jpg"),
+      media("/tour-images/cenote-2.png"),
+      media("/tour-images/cenote-3.png"),
+      media("/tour-images/cenote-4.png"),
+      media("/tour-images/cenote-5.png")
     ],
     ...tourContent[language]["cenote-adventuring"],
     rating: 4.5,
@@ -692,13 +693,13 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "snorkeling-adventure",
-    image: "/tour-images/snorkeling-2.png",
+    image: media("/tour-images/snorkeling-2.png"),
     galleryImages: [
-      "/tour-images/snorkeling-2.png",
-      "/tour-images/snorkeling-1.png",
+      media("/tour-images/snorkeling-2.png"),
+      media("/tour-images/snorkeling-1.png"),
       tourSnorkelReef,
-      "/tour-images/snorkeling-3.png",
-      "/tour-images/snorkeling-4.png"
+      media("/tour-images/snorkeling-3.png"),
+      media("/tour-images/snorkeling-4.png")
     ],
     ...tourContent[language]["snorkeling-adventure"],
     rating: 4.7,
@@ -708,13 +709,13 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "private-snorkeling",
-    image: "/tour-images/snorkeling-2.png",
+    image: media("/tour-images/snorkeling-2.png"),
     galleryImages: [
-      "/tour-images/snorkeling-2.png",
-      "/tour-images/snorkeling-1.png",
+      media("/tour-images/snorkeling-2.png"),
+      media("/tour-images/snorkeling-1.png"),
       tourSnorkelReef,
-      "/tour-images/snorkeling-3.png",
-      "/tour-images/snorkeling-4.png"
+      media("/tour-images/snorkeling-3.png"),
+      media("/tour-images/snorkeling-4.png")
     ],
     ...tourContent[language]["private-snorkeling"],
     rating: 4.8,
@@ -728,11 +729,11 @@ const getTours = (language: "en" | "es"): Array<{
     image: tourTacos,
     galleryImages: [
       tourTacos,
-      "/tour-images/taco-1.png",
-      "/tour-images/taco-2.png",
-      "/tour-images/taco-3.png",
-      "/tour-images/taco-4.png",
-      "/tour-images/taco-5.png"
+      media("/tour-images/taco-1.png"),
+      media("/tour-images/taco-2.png"),
+      media("/tour-images/taco-3.png"),
+      media("/tour-images/taco-4.png"),
+      media("/tour-images/taco-5.png")
     ],
     ...tourContent[language]["city-taco-tour"],
     rating: 4.5,
@@ -742,14 +743,14 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "wave-runner",
-    image: "/tour-images/wave-runner-1.jpeg",
+    image: media("/tour-images/wave-runner-1.jpeg"),
     galleryImages: [
-      "/tour-images/wave-runner-1.jpeg",
-      "/tour-images/wave-runner-2.jpeg",
-      "/tour-images/wave-runner-3.jpeg",
-      "/tour-images/wave-runner-4.jpeg",
-      "/tour-images/wave-runner-5.jpeg",
-      "/tour-images/wave-runner-6.jpeg",
+      media("/tour-images/wave-runner-1.jpeg"),
+      media("/tour-images/wave-runner-2.jpeg"),
+      media("/tour-images/wave-runner-3.jpeg"),
+      media("/tour-images/wave-runner-4.jpeg"),
+      media("/tour-images/wave-runner-5.jpeg"),
+      media("/tour-images/wave-runner-6.jpeg"),
     ],
     ...tourContent[language]["wave-runner"],
     rating: 4.7,
@@ -759,16 +760,16 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "mayan-jungle-tour",
-    image: "/tour-images/mayan-jungle-tour-1.jpeg",
+    image: media("/tour-images/mayan-jungle-tour-1.jpeg"),
     galleryImages: [
-      "/tour-images/mayan-jungle-tour-1.jpeg",
-      "/tour-images/mayan-jungle-tour-2.jpeg",
-      "/tour-images/mayan-jungle-tour-3.jpeg",
-      "/tour-images/mayan-jungle-tour-4.jpeg",
-      "/tour-images/mayan-jungle-tour-5.jpeg",
-      "/tour-images/mayan-jungle-tour-6.jpeg",
-      "/tour-images/mayan-jungle-tour-7.jpeg",
-      "/tour-images/mayan-jungle-tour-8.jpeg",
+      media("/tour-images/mayan-jungle-tour-1.jpeg"),
+      media("/tour-images/mayan-jungle-tour-2.jpeg"),
+      media("/tour-images/mayan-jungle-tour-3.jpeg"),
+      media("/tour-images/mayan-jungle-tour-4.jpeg"),
+      media("/tour-images/mayan-jungle-tour-5.jpeg"),
+      media("/tour-images/mayan-jungle-tour-6.jpeg"),
+      media("/tour-images/mayan-jungle-tour-7.jpeg"),
+      media("/tour-images/mayan-jungle-tour-8.jpeg"),
     ],
     ...tourContent[language]["mayan-jungle-tour"],
     rating: 4.6,
@@ -788,14 +789,14 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "extreme-snorkeling-package",
-    image: "/tour-images/extreme-combo-1.png",
+    image: media("/tour-images/extreme-combo-1.png"),
     galleryImages: [
-      "/tour-images/extreme-combo-1.png",
-      "/tour-images/extreme-combo-2.png",
-      "/tour-images/extreme-combo-3.png",
-      "/tour-images/extreme-combo-4.png",
-      "/tour-images/extreme-combo-5.png",
-      "/tour-images/extreme-combo-6.png"
+      media("/tour-images/extreme-combo-1.png"),
+      media("/tour-images/extreme-combo-2.png"),
+      media("/tour-images/extreme-combo-3.png"),
+      media("/tour-images/extreme-combo-4.png"),
+      media("/tour-images/extreme-combo-5.png"),
+      media("/tour-images/extreme-combo-6.png")
     ],
     ...tourContent[language]["extreme-snorkeling-package"],
     rating: 4.8,
@@ -805,11 +806,11 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "full-experience-two-days",
-    image: "/tour-images/extreme-adventuring-1.png",
+    image: media("/tour-images/extreme-adventuring-1.png"),
     galleryImages: [
-      "/tour-images/extreme-adventuring-1.png",
-      "/tour-images/cenote-1.png",
-      "/tour-images/extreme-adventuring-3.png"
+      media("/tour-images/extreme-adventuring-1.png"),
+      media("/tour-images/cenote-1.png"),
+      media("/tour-images/extreme-adventuring-3.png")
     ],
     ...tourContent[language]["full-experience-two-days"],
     rating: 4.9,
@@ -819,11 +820,11 @@ const getTours = (language: "en" | "es"): Array<{
   },
   {
     id: "snorkeling-cenote-package",
-    image: "/tour-images/snorkeling-2.png",
+    image: media("/tour-images/snorkeling-2.png"),
     galleryImages: [
-      "/tour-images/snorkeling-2.png",
-      "/tour-images/cenote-1.png",
-      "/tour-images/snorkeling-3.png"
+      media("/tour-images/snorkeling-2.png"),
+      media("/tour-images/cenote-1.png"),
+      media("/tour-images/snorkeling-3.png")
     ],
     ...tourContent[language]["snorkeling-cenote-package"],
     rating: 4.7,

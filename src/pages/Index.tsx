@@ -18,6 +18,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { sortPropertiesByPriority } from "@/utils/cityMapping";
 import { isPropertyHidden } from "@/config/hidden-properties";
+import { media } from "@/lib/media";
 
 // Define the translations object
 const translations = {
@@ -140,7 +141,7 @@ const featuredYacht = {
   marina: "Cancún",
   size: "62 ft",
   capacity: 16,
-  image: "/yacht-images/sunseeker62-1.jpg",
+  image: media("/yacht-images/sunseeker62-1.jpg"),
   description: "Sunseeker Predator de 62 pies, deportivo y lujoso. Velocidad y estilo en el Caribe mexicano.",
   pricing: [{ duration: "6 horas", price: "80,000" }],
   currency: "MXN" as const,

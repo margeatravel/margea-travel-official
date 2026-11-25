@@ -28,6 +28,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { getRatingData } from "@/lib/ratings";
+import { media } from "@/lib/media";
 
 interface Property {
   id: string;
@@ -73,9 +74,9 @@ export default function HotelDetail() {
   const [activeCategory, setActiveCategory] = useState<RoomCategory>("all");
 
   const HERO_IMAGES = [
-    "/hotel-images/anayiose-hero-1.jpeg",
-    "/hotel-images/anayiose-hero-2.jpeg",
-    "/hotel-images/anayiose-hero-3.jpeg",
+    media("/hotel-images/anayiose-hero-1.jpeg"),
+    media("/hotel-images/anayiose-hero-2.jpeg"),
+    media("/hotel-images/anayiose-hero-3.jpeg"),
   ];
 
   // Preload hero images

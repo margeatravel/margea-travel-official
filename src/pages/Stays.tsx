@@ -12,6 +12,7 @@ import { Home, Hotel, Building2 } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { sortPropertiesByPriority, getPropertyCity } from "@/utils/cityMapping";
 import { isPropertyHidden } from "@/config/hidden-properties";
+import { media } from "@/lib/media";
 
 type FilterTab = 'all' | 'hotels' | 'stays';
 
@@ -136,7 +137,7 @@ export default function Stays() {
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: "url('/property-images/akumal-hero.avif')" }}
+          style={{ backgroundImage: "url(media('/property-images/akumal-hero.avif'))" }}
         />
         <div className="absolute inset-0 bg-black/50" />
         <div className="relative z-10 text-center px-4">

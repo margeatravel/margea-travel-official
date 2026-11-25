@@ -1,3 +1,4 @@
+import { media } from "@/lib/media";
 // City-specific content for SEO pages
 
 export interface CityContentData {
@@ -26,7 +27,7 @@ export const cityContentData: Record<string, CityContentData> = {
   tulum: {
     cityName: "Tulum",
     citySlug: "tulum",
-    heroImage: "/property-images/tulum-1.jpg",
+    heroImage: media("/property-images/tulum-1.jpg"),
     content: {
       en: {
         discoverTitle: "Discover Tulum, Mexico",
@@ -99,7 +100,7 @@ export const cityContentData: Record<string, CityContentData> = {
   "playa-del-carmen": {
     cityName: "Playa del Carmen",
     citySlug: "playa-del-carmen",
-    heroImage: "/property-images/nickprice-1.jpg",
+    heroImage: media("/property-images/nickprice-1.jpg"),
     content: {
       en: {
         discoverTitle: "Discover Playa del Carmen, Mexico",
@@ -172,7 +173,7 @@ export const cityContentData: Record<string, CityContentData> = {
   cancun: {
     cityName: "Cancun",
     citySlug: "cancun",
-    heroImage: "/property-images/cancun-estate-1.jpg",
+    heroImage: media("/property-images/cancun-estate-1.jpg"),
     content: {
       en: {
         discoverTitle: "Discover Cancun, Mexico",
@@ -245,7 +246,7 @@ export const cityContentData: Record<string, CityContentData> = {
   "puerto-morelos": {
     cityName: "Puerto Morelos",
     citySlug: "puerto-morelos",
-    heroImage: "/property-images/puerto-morelos-1.jpg",
+    heroImage: media("/property-images/puerto-morelos-1.jpg"),
     content: {
       en: {
         discoverTitle: "Discover Puerto Morelos, Mexico",
@@ -318,7 +319,7 @@ export const cityContentData: Record<string, CityContentData> = {
   "isla-mujeres": {
     cityName: "Isla Mujeres",
     citySlug: "isla-mujeres",
-    heroImage: "/property-images/isla-mujeres-1.jpg",
+    heroImage: media("/property-images/isla-mujeres-1.jpg"),
     content: {
       en: {
         discoverTitle: "Discover Isla Mujeres, Mexico",

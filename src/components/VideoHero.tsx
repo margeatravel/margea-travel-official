@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { media } from "@/lib/media";
 
 interface VideoHeroProps {
   children: React.ReactNode;
@@ -74,10 +75,10 @@ export function VideoHero({ children }: VideoHeroProps) {
           loop
           playsInline
           preload="metadata"
-          poster="/videos/margea-hero-poster.jpg"
+          poster={media("/videos/margea-hero-poster.jpg")}
           aria-hidden="true"
         >
-          <source src="/videos/margea-hero.mp4" type="video/mp4" />
+          <source src={media("/videos/margea-hero.mp4")} type="video/mp4" />
         </video>
 
         {/* Dark overlay for text readability */}

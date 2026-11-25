@@ -10,6 +10,7 @@ import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { YaabCar, yaabCarsSeed, mapRentalCarRow } from "@/data/yaab-cars-data";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { media } from "@/lib/media";
 
 type Language = "en" | "es";
 
@@ -120,7 +121,7 @@ const CarRentals = () => {
       <ActivityHero
         title={t.heroTitle}
         subtitle={t.heroSubtitle}
-        backgroundImage="/yaab-cars/jac_sei_8_2025_roja.png"
+        backgroundImage={media("/yaab-cars/jac_sei_8_2025_roja.png")}
       >
         <p className="text-xs text-white/80">{t.operatedBy}</p>
       </ActivityHero>

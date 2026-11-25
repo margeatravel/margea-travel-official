@@ -1,3 +1,4 @@
+import { media } from "@/lib/media";
 export type VehicleCategory = 'exotic' | 'suv';
 
 export interface ExperienceOption {
@@ -77,9 +78,9 @@ export const exoticCars: ExoticCar[] = [
     badge: 'NEW',
     category: 'exotic',
     images: [
-      '/car-images/ferrari-roma-spider.png',
+      media('/car-images/ferrari-roma-spider.png'),
     ],
-    fallbackImage: '/car-images/ferrari-roma-spider.png',
+    fallbackImage: media('/car-images/ferrari-roma-spider.png'),
     experiences: experienceOptions,
     year: 2024,
     vehicleType: 'Grand Tourer',
@@ -95,9 +96,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'Lamborghini Huracan Tecnica',
     category: 'exotic',
     images: [
-      '/car-images/lamborghini-huracan.png',
+      media('/car-images/lamborghini-huracan.png'),
     ],
-    fallbackImage: '/car-images/lamborghini-huracan.png',
+    fallbackImage: media('/car-images/lamborghini-huracan.png'),
     experiences: experienceOptions,
     year: 2023,
     vehicleType: 'Supercar',
@@ -113,9 +114,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'McLaren 750S',
     category: 'exotic',
     images: [
-      '/car-images/mclaren-750s.png',
+      media('/car-images/mclaren-750s.png'),
     ],
-    fallbackImage: '/car-images/mclaren-750s.png',
+    fallbackImage: media('/car-images/mclaren-750s.png'),
     experiences: experienceOptions,
     year: 2024,
     vehicleType: 'Supercar',
@@ -131,9 +132,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'Porsche 911 Targa 4S',
     category: 'exotic',
     images: [
-      '/car-images/porsche-911-targa.png',
+      media('/car-images/porsche-911-targa.png'),
     ],
-    fallbackImage: '/car-images/porsche-911-targa.png',
+    fallbackImage: media('/car-images/porsche-911-targa.png'),
     experiences: experienceOptions,
     year: 2021,
     vehicleType: 'Sports Car',
@@ -149,9 +150,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'BMW 4 Series Convertible (M Sport)',
     category: 'exotic',
     images: [
-      '/car-images/bmw-4-series-convertible.png',
+      media('/car-images/bmw-4-series-convertible.png'),
     ],
-    fallbackImage: '/car-images/bmw-4-series-convertible.png',
+    fallbackImage: media('/car-images/bmw-4-series-convertible.png'),
     experiences: experienceOptions,
     year: 2024,
     vehicleType: 'Sport / Convertible',
@@ -170,9 +171,9 @@ export const exoticCars: ExoticCar[] = [
     badge: 'POPULAR',
     category: 'suv',
     images: [
-      '/car-images/mercedes-g63.png',
+      media('/car-images/mercedes-g63.png'),
     ],
-    fallbackImage: '/car-images/mercedes-g63.png',
+    fallbackImage: media('/car-images/mercedes-g63.png'),
     suvPricing: {
       hourly: 250,
       daily: 1200,
@@ -191,9 +192,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'Mercedes-Benz GLE 450 4MATIC Coupe',
     category: 'suv',
     images: [
-      '/car-images/mercedes-gle-450.png',
+      media('/car-images/mercedes-gle-450.png'),
     ],
-    fallbackImage: '/car-images/mercedes-gle-450.png',
+    fallbackImage: media('/car-images/mercedes-gle-450.png'),
     suvPricing: {
       hourly: 180,
       daily: 480,
@@ -212,9 +213,9 @@ export const exoticCars: ExoticCar[] = [
     name: 'Range Rover Autobiography 50th Anniversary',
     category: 'suv',
     images: [
-      '/car-images/range-rover-autobiography.png',
+      media('/car-images/range-rover-autobiography.png'),
     ],
-    fallbackImage: '/car-images/range-rover-autobiography.png',
+    fallbackImage: media('/car-images/range-rover-autobiography.png'),
     suvPricing: {
       hourly: 200,
       daily: 900,

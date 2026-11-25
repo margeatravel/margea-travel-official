@@ -12,6 +12,7 @@ import { toast } from "@/hooks/use-toast";
 import { ActivityHero } from "@/components/ActivityHero";
 
 import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { media } from "@/lib/media";
 
 type Language = 'en' | 'es';
 
@@ -98,7 +99,7 @@ const ExoticCarRentals = () => {
       <ActivityHero
         title={t.heroTitle}
         subtitle={t.heroSubtitle}
-        backgroundImage="/exotic-cars/exotic-cars-hero.jpg"
+        backgroundImage={media("/exotic-cars/exotic-cars-hero.jpg")}
       >
         <p className="text-xs text-white/80">
           {t.operatedBy}

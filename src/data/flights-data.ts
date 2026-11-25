@@ -1,3 +1,4 @@
+import { media } from "@/lib/media";
 // Margea Flights Data
 // operator_price_usd is INTERNAL ONLY - never display to users
 // margea_price_usd = round(operator_price_usd * 1.15) - this is the public price
@@ -59,7 +60,7 @@ export const aircraftSpecs: Record<string, AircraftSpec> = {
       en: ['5 Passengers', 'Private Flight', 'Express Flight', 'Luggage Area', 'Model 2001', 'Restored 2020'],
       es: ['5 Pasajeros', 'Vuelo Privado', 'Vuelo Express', 'Área para Maletas', 'Modelo 2001', 'Restaurado 2020'],
     },
-    image: '/flight-images/cessna-exterior.jpg',
+    image: media('/flight-images/cessna-exterior.jpg'),
     model_year: '2001',
     additional_info: {
       en: 'Restored in 2020 with modern avionics',
@@ -73,7 +74,7 @@ export const aircraftSpecs: Record<string, AircraftSpec> = {
       en: ['9 Passengers', 'Air Conditioning', 'Express Flight', 'Luggage Area', 'Model 2016'],
       es: ['9 Pasajeros', 'Aire Acondicionado', 'Vuelo Express', 'Área para Maletas', 'Modelo 2016'],
     },
-    image: '/flight-images/kodiak-interior.jpg',
+    image: media('/flight-images/kodiak-interior.jpg'),
     model_year: '2016',
     additional_info: {
       en: 'Premium aircraft with spacious cabin',
@@ -87,7 +88,7 @@ export const aircraftSpecs: Record<string, AircraftSpec> = {
       en: ['5 Passengers', 'Twin Engine', 'Private Flight', 'Luggage Area', 'Modern Avionics'],
       es: ['5 Pasajeros', 'Bimotor', 'Vuelo Privado', 'Área para Maletas', 'Aviónica Moderna'],
     },
-    image: '/flight-images/piper-placeholder.jpg',
+    image: media('/flight-images/piper-placeholder.jpg'),
     model_year: 'TBD',
     additional_info: {
       en: 'Reliable twin-engine aircraft for enhanced safety',
@@ -101,12 +102,12 @@ export const aircraftSpecs: Record<string, AircraftSpec> = {
       en: ['6–8 Passengers', 'Private Jet', 'Long Range', 'Leather Cabin', 'Base: Toluca'],
       es: ['6–8 Pasajeros', 'Jet Privado', 'Largo Alcance', 'Cabina de Piel', 'Base: Toluca'],
     },
-    image: '/flight-images/lj31a-4.jpg',
+    image: media('/flight-images/lj31a-4.jpg'),
     galleryImages: [
-      '/flight-images/lj31a-4.jpg',
-      '/flight-images/lj31a-1.jpg',
-      '/flight-images/lj31a-2.jpg',
-      '/flight-images/lj31a-3.jpg',
+      media('/flight-images/lj31a-4.jpg'),
+      media('/flight-images/lj31a-1.jpg'),
+      media('/flight-images/lj31a-2.jpg'),
+      media('/flight-images/lj31a-3.jpg'),
     ],
     range: '1,000–1,300 NM',
     base: 'Toluca',

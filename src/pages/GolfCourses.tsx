@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Shield, Star, Clock, Users } from "lucide-react";
 
 import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { media } from "@/lib/media";
 
 type Language = "en" | "es";
 
@@ -58,7 +59,7 @@ const GolfCourses = () => {
       <ActivityHero
         title="Premier Golf Experiences in Cancun & Riviera Maya"
         subtitle="Exclusive access to championship courses with preferred rates and concierge coordination."
-        backgroundImage="/golf-images/golf-hero.jpg"
+        backgroundImage={media("/golf-images/golf-hero.jpg")}
         className="min-h-[36vh]"
       />
 

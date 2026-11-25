@@ -5,6 +5,7 @@ import { useLanguage } from "@/components/LanguageToggle";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { media } from "@/lib/media";
 
 interface CityPlaceholderProps {
   cityName: string;
@@ -59,12 +60,12 @@ const translations = {
 };
 
 const destinationImages: Record<string, string> = {
-  akumal: "/property-images/akumal-u7-1.jpg",
-  tulum: "/property-images/tulum-1.jpg",
-  "playa-del-carmen": "/property-images/nickprice-1.jpg",
-  cancun: "/property-images/cancun-estate-1.jpg",
-  "puerto-morelos": "/property-images/puerto-morelos-1.jpg",
-  "isla-mujeres": "/property-images/isla-mujeres-1.jpg",
+  akumal: media("/property-images/akumal-u7-1.jpg"),
+  tulum: media("/property-images/tulum-1.jpg"),
+  "playa-del-carmen": media("/property-images/nickprice-1.jpg"),
+  cancun: media("/property-images/cancun-estate-1.jpg"),
+  "puerto-morelos": media("/property-images/puerto-morelos-1.jpg"),
+  "isla-mujeres": media("/property-images/isla-mujeres-1.jpg"),
 };
 
 export function CityPlaceholderPage({ cityName, citySlug }: CityPlaceholderProps) {

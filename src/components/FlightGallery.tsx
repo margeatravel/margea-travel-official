@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { media } from "@/lib/media";
 
 type Language = 'en' | 'es';
 
@@ -9,15 +10,15 @@ interface FlightGalleryProps {
 }
 
 const galleryImages = [
-  { src: "/flight-images/gallery-pink.jpg", alt: "Aerial view over pink lagoon" },
-  { src: "/flight-images/gallery-cockpit-view.jpg", alt: "Cockpit view with glass avionics over Caribbean" },
-  { src: "/flight-images/gallery-cabin-table.jpg", alt: "Premium cabin with refreshments" },
-  { src: "/flight-images/gallery-coastal-flight.jpg", alt: "Piper Seneca flying over coastal scenery" },
-  { src: "/flight-images/gallery-pilot-city.jpg", alt: "Pilot view over city" },
-  { src: "/flight-images/gallery-kodiak-ocean.jpg", alt: "Kodiak cockpit over ocean" },
-  { src: "/flight-images/gallery-fbo-terminal.jpg", alt: "Aircraft at FBO terminal" },
-  { src: "/flight-images/gallery-cockpit-wide.jpg", alt: "Wide cockpit view with digital displays" },
-  { src: "/flight-images/gallery-kodiak-sunset.jpg", alt: "Kodiak aircraft at sunset" },
+  { src: media("/flight-images/gallery-pink.jpg"), alt: "Aerial view over pink lagoon" },
+  { src: media("/flight-images/gallery-cockpit-view.jpg"), alt: "Cockpit view with glass avionics over Caribbean" },
+  { src: media("/flight-images/gallery-cabin-table.jpg"), alt: "Premium cabin with refreshments" },
+  { src: media("/flight-images/gallery-coastal-flight.jpg"), alt: "Piper Seneca flying over coastal scenery" },
+  { src: media("/flight-images/gallery-pilot-city.jpg"), alt: "Pilot view over city" },
+  { src: media("/flight-images/gallery-kodiak-ocean.jpg"), alt: "Kodiak cockpit over ocean" },
+  { src: media("/flight-images/gallery-fbo-terminal.jpg"), alt: "Aircraft at FBO terminal" },
+  { src: media("/flight-images/gallery-cockpit-wide.jpg"), alt: "Wide cockpit view with digital displays" },
+  { src: media("/flight-images/gallery-kodiak-sunset.jpg"), alt: "Kodiak aircraft at sunset" },
 ];
 
 const translations = {

@@ -20,6 +20,7 @@ import { toast as sonnerToast } from "sonner";
 import { ActivityHero } from "@/components/ActivityHero";
 
 import { getWhatsAppUrl } from "@/lib/whatsapp";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -236,43 +237,43 @@ export default function Concierge() {
       icon: ChefHat,
       title: t.personalChefTitle,
       description: t.personalChefDesc,
-      image: "/concierge-images/personal-chef.jpg",
+      image: media("/concierge-images/personal-chef.jpg"),
     },
     {
       icon: HandHeart,
       title: t.massageTitle,
       description: t.massageDesc,
-      image: "/concierge-images/massage-spa.jpg",
+      image: media("/concierge-images/massage-spa.jpg"),
     },
     {
       icon: Heart,
       title: t.weddingsTitle,
       description: t.weddingsDesc,
-      image: "/concierge-images/weddings-proposals.jpg",
+      image: media("/concierge-images/weddings-proposals.jpg"),
     },
     {
       icon: PartyPopper,
       title: t.eventsTitle,
       description: t.eventsDesc,
-      image: "/concierge-images/bachelor-events.jpg",
+      image: media("/concierge-images/bachelor-events.jpg"),
     },
     {
       icon: UtensilsCrossed,
       title: t.restaurantTitle,
       description: t.restaurantDesc,
-      image: "/concierge-images/restaurant.jpg",
+      image: media("/concierge-images/restaurant.jpg"),
     },
     {
       icon: Music,
       title: t.nightclubTitle,
       description: t.nightclubDesc,
-      image: "/concierge-images/nightclub-mandala.jpg",
+      image: media("/concierge-images/nightclub-mandala.jpg"),
     },
     {
       icon: Car,
       title: t.carRentalTitle,
       description: t.carRentalDesc,
-      image: "/concierge-images/car-rental.jpg",
+      image: media("/concierge-images/car-rental.jpg"),
     },
   ];
 
@@ -451,7 +452,7 @@ export default function Concierge() {
       <ActivityHero
         title={t.title}
         subtitle={t.subtitle}
-        backgroundImage="/yacht-images/yacht-1.jpg"
+        backgroundImage={media("/yacht-images/yacht-1.jpg")}
       >
         <p className="text-base md:text-lg text-white/90 max-w-2xl mx-auto">
           {t.description}

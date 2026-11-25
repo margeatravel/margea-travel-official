@@ -11,6 +11,7 @@ import { getTourImage } from "@/data/tourImages";
 import { supabase } from "@/integrations/supabase/client";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { ShareCartControl } from "./ShareCartControl";
+import { media } from "@/lib/media";
 
 
 function CartItemCard({
@@ -230,7 +231,7 @@ export function CartDrawer() {
                       asChild
                     >
                       <Link to="/tours">
-                        <UpsellThumb src="/tour-images/snorkeling-adventure-cover.jpg" />
+                        <UpsellThumb src={media("/tour-images/snorkeling-adventure-cover.jpg")} />
                         <span className="flex items-center gap-1">
                           <Plus className="w-2.5 h-2.5" />
                           Add more tours
@@ -245,7 +246,7 @@ export function CartDrawer() {
                       asChild
                     >
                       <Link to="/activities/transportation">
-                        <UpsellThumb src="/tour-images/extreme-adventuring-cover.jpg" />
+                        <UpsellThumb src={media("/tour-images/extreme-adventuring-cover.jpg")} />
                         <span className="flex items-center gap-1">
                           <ArrowRight className="w-2.5 h-2.5" />
                           Add transport

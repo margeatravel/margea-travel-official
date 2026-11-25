@@ -13,6 +13,7 @@ import { CharterFlightNavigation } from "@/components/CharterFlightNavigation";
 import { flights, scenicFlights, aircraftSpecs, type FlightProduct } from "@/data/flights-data";
 import { Plane, Palmtree } from "lucide-react";
 import { ActivityHero } from "@/components/ActivityHero";
+import { media } from "@/lib/media";
 
 type Language = 'en' | 'es';
 
@@ -119,7 +120,7 @@ const Flights = () => {
       <ActivityHero
         title={t.heroTitle}
         subtitle={t.heroSubtitle}
-        backgroundImage="/flight-images/flights-hero.jpg"
+        backgroundImage={media("/flight-images/flights-hero.jpg")}
       />
 
       {/* Our Aircraft Section */}
@@ -136,19 +137,19 @@ const Flights = () => {
             <AircraftInfoCard
               aircraft={aircraftSpecs['Cessna 206']}
               language={language}
-              imageUrl="/flight-images/cessna-interior.jpg"
+              imageUrl={media("/flight-images/cessna-interior.jpg")}
               onBookFlight={() => handleOpenPicker('cessna')}
             />
             <AircraftInfoCard
               aircraft={aircraftSpecs['Kodiak']}
               language={language}
-              imageUrl="/flight-images/kodiak-interior.jpg"
+              imageUrl={media("/flight-images/kodiak-interior.jpg")}
               onBookFlight={() => handleOpenPicker('kodiak')}
             />
             <AircraftInfoCard
               aircraft={aircraftSpecs['Piper Seneca']}
               language={language}
-              imageUrl="/flight-images/piper-seneca-cabin.jpg"
+              imageUrl={media("/flight-images/piper-seneca-cabin.jpg")}
               onBookFlight={() => handleOpenPicker('piper')}
             />
           </div>

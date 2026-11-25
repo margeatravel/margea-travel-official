@@ -9,6 +9,7 @@ import { akumalTour } from "@/data/akumalTour";
 import { dolphinTour, getTotalReviews as getDolphinTotalReviews, getBestRating as getDolphinBestRating } from "@/data/dolphinTour";
 import { getFromPrice, getCardPricing } from "@/data/toursPricing";
 import { whaleSharkCover } from "@/data/whaleSharkImages";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -28,7 +29,7 @@ const translations = {
 const tours = [
   {
     id: "extreme-adventuring",
-    image: "/tour-images/extreme-adventuring-cover.jpg",
+    image: media("/tour-images/extreme-adventuring-cover.jpg"),
     title: "Extreme Adventuring",
     subtitle: "ATV, Zipline, Cenote and Mayan Show",
     duration: "4 hours",
@@ -39,7 +40,7 @@ const tours = [
   },
   {
     id: "extreme-horseback-riding",
-    image: "/tour-images/horseback-cover.jpg",
+    image: media("/tour-images/horseback-cover.jpg"),
     title: "Extreme Horseback Riding",
     subtitle: "Horseback and ATV circuit, Zipline, cenote and Mayan show",
     duration: "4 hours",
@@ -50,7 +51,7 @@ const tours = [
   },
   {
     id: "private-snorkeling",
-    image: "/tour-images/snorkeling-2.png",
+    image: media("/tour-images/snorkeling-2.png"),
     title: "Private Snorkeling",
     subtitle: "Private boat ride & Snorkeling in Puerto Morelos",
     duration: "4 hours",
@@ -62,7 +63,7 @@ const tours = [
   },
   {
     id: "snorkeling-adventure",
-    image: "/tour-images/snorkeling-adventure-cover.jpg",
+    image: media("/tour-images/snorkeling-adventure-cover.jpg"),
     title: "Snorkeling Adventure",
     subtitle: "Snorkel the biggest reef in 'The Americas'",
     duration: "4 hours",
@@ -73,7 +74,7 @@ const tours = [
   },
   {
     id: "cenote-adventuring",
-    image: "/tour-images/cenote-1.png",
+    image: media("/tour-images/cenote-1.png"),
     title: "Cenote Adventuring",
     subtitle: "3 cenote boutique experience, Mayan show with snack",
     duration: "4 hours",
@@ -84,7 +85,7 @@ const tours = [
   },
   {
     id: "city-taco-tour",
-    image: "/tour-images/taco-tour-cover.jpg",
+    image: media("/tour-images/taco-tour-cover.jpg"),
     title: "Beach Taco Tour",
     subtitle: "Beachside tacos & town tour with tequila tasting (From Cancun)",
     duration: "4 hours",
@@ -98,7 +99,7 @@ const tours = [
 // Chichen Itza tour card data - derived from single source of truth
 const chichenItzaCard = {
   id: chichenItzaTour.slug,
-  image: "/tour-images/chichen-itza-pyramid.jpg",
+  image: media("/tour-images/chichen-itza-pyramid.jpg"),
   title: chichenItzaTour.title,
   subtitle: "Visit one of the New 7 Wonders of the World",
   duration: chichenItzaTour.duration,
@@ -118,7 +119,7 @@ const chichenItzaCard = {
 // Akumal tour card data - derived from single source of truth
 const akumalCard = {
   id: akumalTour.slug,
-  image: "/tour-images/akumal-turtle-cover.jpg",
+  image: media("/tour-images/akumal-turtle-cover.jpg"),
   title: akumalTour.title,
   subtitle: "Swim with sea turtles in their natural habitat",
   duration: "4 hours",
@@ -158,7 +159,7 @@ const dolphinCard = {
 // Wave Runner card
 const waveRunnerCard = {
   id: "wave-runner",
-  image: "/tour-images/wave-runner-1.jpeg",
+  image: media("/tour-images/wave-runner-1.jpeg"),
   title: "Puerto Maya Wave Runner",
   subtitle: "Adrenaline ride across the Nichupté Lagoon",
   duration: "30 min – 1 hour",
@@ -173,7 +174,7 @@ const waveRunnerCard = {
 // Mayan Jungle Tour card
 const mayanJungleCard = {
   id: "mayan-jungle-tour",
-  image: "/tour-images/mayan-jungle-tour-1.jpeg",
+  image: media("/tour-images/mayan-jungle-tour-1.jpeg"),
   title: "Mayan Jungle Tour",
   subtitle: "Speed boat, snorkeling & sacred Mayan ceremony",
   duration: "3 hours",
@@ -201,7 +202,7 @@ const whaleSharkCard = {
 const packages = [
   {
     id: "extreme-snorkeling-package",
-    image: "/tour-images/extreme-combo-1.png",
+    image: media("/tour-images/extreme-combo-1.png"),
     title: "Extreme Adventuring + Snorkeling Adventure Package",
     subtitle: "Extreme Adventuring Package",
     duration: "8 hours",
@@ -212,7 +213,7 @@ const packages = [
   },
   {
     id: "full-experience-two-days",
-    image: "/tour-images/extreme-adventuring-1.png",
+    image: media("/tour-images/extreme-adventuring-1.png"),
     title: "Full Experience Adventure Two Days ATV Package",
     subtitle: "Extreme Adventuring Package",
     duration: "2 days",
@@ -223,7 +224,7 @@ const packages = [
   },
   {
     id: "snorkeling-cenote-package",
-    image: "/tour-images/snorkeling-2.png",
+    image: media("/tour-images/snorkeling-2.png"),
     title: "Snorkeling Adventure with Cenote Adventure Package",
     subtitle: "Extreme Adventuring Package",
     duration: "6 hours",
@@ -250,7 +251,7 @@ export default function Tours() {
       <ActivityHero
         title={t.title}
         subtitle={t.subtitle}
-        backgroundImage="/tour-images/snorkeling-reef-hero.jpg"
+        backgroundImage={media("/tour-images/snorkeling-reef-hero.jpg")}
       />
 
       <section className="py-16 bg-muted/50">

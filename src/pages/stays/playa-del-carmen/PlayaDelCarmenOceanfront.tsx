@@ -1,4 +1,5 @@
 import { CitySubpage } from "@/components/seo/CitySubpage";
+import { media } from "@/lib/media";
 export default function PlayaDelCarmenOceanfront() {
-  return <CitySubpage cityName="Playa del Carmen" citySlug="playa-del-carmen" subpageType="oceanfront" heroImage="/property-images/nickprice-1.jpg" />;
+  return <CitySubpage cityName="Playa del Carmen" citySlug="playa-del-carmen" subpageType="oceanfront" heroImage={media("/property-images/nickprice-1.jpg")} />;
 }

@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { media } from "@/lib/media";
 
 const HERO_SLIDES = [
-  "/hero-slides/slide-1.jpg",
-  "/hero-slides/slide-2.jpg",
-  "/hero-slides/slide-3.jpg",
-  "/hero-slides/slide-4.jpg",
-  "/hero-slides/slide-5.jpg",
-  "/hero-slides/slide-6.jpg",
-  "/hero-slides/slide-7.jpg",
-  "/hero-slides/slide-8.jpg",
-  "/hero-slides/slide-9.jpg",
-  "/hero-slides/slide-10.jpg",
-  "/property-images/sunset-surfer.jpg",
+  media("/hero-slides/slide-1.jpg"),
+  media("/hero-slides/slide-2.jpg"),
+  media("/hero-slides/slide-3.jpg"),
+  media("/hero-slides/slide-4.jpg"),
+  media("/hero-slides/slide-5.jpg"),
+  media("/hero-slides/slide-6.jpg"),
+  media("/hero-slides/slide-7.jpg"),
+  media("/hero-slides/slide-8.jpg"),
+  media("/hero-slides/slide-9.jpg"),
+  media("/hero-slides/slide-10.jpg"),
+  media("/property-images/sunset-surfer.jpg"),
 ];
 
 interface ImageHeroProps {

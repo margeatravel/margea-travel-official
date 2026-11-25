@@ -17,6 +17,7 @@ import HowItWorksSection from "@/components/pm/HowItWorksSection";
 import HeroTestimonialSection from "@/components/pm/HeroTestimonialSection";
 import FAQSection from "@/components/pm/FAQSection";
 import FinalCTASection from "@/components/pm/FinalCTASection";
+import { media } from "@/lib/media";
 
 // Service features
 const serviceFeatures = [
@@ -99,7 +100,7 @@ export default function PropertyManagement() {
         <div
           className="absolute inset-0"
           style={{
-            backgroundImage: `url('/property-images/akumal-u7-1.jpg')`,
+            backgroundImage: `url(media('/property-images/akumal-u7-1.jpg'))`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -205,7 +206,7 @@ export default function PropertyManagement() {
                 location: "Cancun – Oceanfront",
                 tag: "Luxury Villa",
                 badge: "High Performance",
-                image: "/property-images/cancun-estate-1.jpg",
+                image: media("/property-images/cancun-estate-1.jpg"),
                 link: "/stays/cancun",
                 cta: "View Property",
               },
@@ -214,7 +215,7 @@ export default function PropertyManagement() {
                 location: "Tulum",
                 tag: "Modern Apartments",
                 badge: "High Demand",
-                image: "/property-images/azana-tulum-1.jpg",
+                image: media("/property-images/azana-tulum-1.jpg"),
                 link: "/stays/tulum",
                 cta: "View Properties",
               },
@@ -223,7 +224,7 @@ export default function PropertyManagement() {
                 location: "Akumal",
                 tag: "Beachside Apartments",
                 badge: "Strong Occupancy",
-                image: "/property-images/akumal-u7-cover.jpeg",
+                image: media("/property-images/akumal-u7-cover.jpeg"),
                 link: "/stays/akumal",
                 cta: "View Properties",
               },
@@ -232,7 +233,7 @@ export default function PropertyManagement() {
                 location: "Puerto Morelos",
                 tag: "Ocean View Apartments",
                 badge: "Growing Market",
-                image: "/property-images/puerto-morelos-16.jpg",
+                image: media("/property-images/puerto-morelos-16.jpg"),
                 link: "/stays/puerto-morelos",
                 cta: "View Properties",
               },

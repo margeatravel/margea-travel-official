@@ -1,4 +1,5 @@
 import { Language } from "@/components/LanguageToggle";
+import { media } from "@/lib/media";
 
 const translations = {
   en: {
@@ -36,7 +37,7 @@ export default function HeroTestimonialSection({ language }: HeroTestimonialSect
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: "url('/property-images/akumal-u7-1.jpg')",
+          backgroundImage: "url(media('/property-images/akumal-u7-1.jpg'))",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
