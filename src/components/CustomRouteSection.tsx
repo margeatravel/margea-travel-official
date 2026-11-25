@@ -23,7 +23,7 @@ const BASE_FEE = 799; // Base fee in MXN
 const KM_RATE = 15; // Price per kilometer in MXN
 const MIN_FARE = 999; // Minimum fare in MXN
 const STOP_FEE = 200; // Fee per extra stop in MXN
-const ROUND_TRIP_MULTIPLIER = 1.85; // Multiplier for round trips
+const ROUND_TRIP_MULTIPLIER = 2; // Multiplier for round trips
 // ============================================
 
 type Language = "en" | "es";
