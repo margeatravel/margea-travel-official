@@ -7,9 +7,12 @@ const corsHeaders = {
 
 // Direct Google Maps API — no Lovable Connector Gateway.
 // Server API key is read from the environment at runtime (never hardcoded).
-// Places API (New) lives on places.googleapis.com — NOT maps.googleapis.com
-// (the old host returns Google's HTML 404 page for /places/v1/...).
-const PLACES_BASE_URL = "https://places.googleapis.com";
+//
+// IMPORTANT: use the LEGACY Places endpoints on maps.googleapis.com.
+// The Places API (New) hosts (places.googleapis.com) return Google's HTML
+// 404 page when called from the Supabase edge runtime, even though the
+// same requests work from elsewhere. The legacy endpoints work fine here.
+const MAPS_BASE_URL = "https://maps.googleapis.com";
 
 interface AutocompleteRequest {
   input: string;
@@ -44,45 +47,35 @@ serve(async (req) => {
         );
       }
 
-      console.log("Places autocomplete (New) request:", { input });
+      console.log("Places autocomplete (legacy) request:", { input });
 
-      const body: Record<string, unknown> = {
-        input,
-        includedRegionCodes: ["mx", "us", "ca"],
-      };
-      if (sessionToken) body.sessionToken = sessionToken;
+      const autocompleteUrl = new URL(`${MAPS_BASE_URL}/maps/api/place/autocomplete/json`);
+      autocompleteUrl.searchParams.set("input", input);
+      autocompleteUrl.searchParams.set("key", apiKey);
+      autocompleteUrl.searchParams.set("components", "country:mx|country:us|country:ca");
+      if (sessionToken) autocompleteUrl.searchParams.set("sessiontoken", sessionToken);
 
-      const response = await fetch(`${PLACES_BASE_URL}/places/v1/places:autocomplete`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Goog-Api-Key": apiKey,
-        },
-        body: JSON.stringify(body),
-      });
-
+      const response = await fetch(autocompleteUrl.toString());
       // Read as text first: Google returns an HTML error page (not JSON)
       // for wrong hosts/keys, and response.json() on HTML hides the cause.
       const rawText = await response.text();
-      console.log("Autocomplete (New) status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
+      console.log("Autocomplete (legacy) status:", response.status, "body:", rawText.slice(0, 300));
 
       if (!response.ok) {
-        throw new Error(
-          `Places API (New) error ${response.status}: ${rawText.slice(0, 500)}`
-        );
+        throw new Error(`Places API error ${response.status}: ${rawText.slice(0, 500)}`);
       }
 
       const data = JSON.parse(rawText);
+      if (data.status !== "OK" && data.status !== "ZERO_RESULTS") {
+        throw new Error(`Places API error: ${data.status} ${data.error_message || ""}`);
+      }
 
-      const predictions = (data.suggestions || [])
-        .map((s: any) => s.placePrediction)
-        .filter(Boolean)
-        .map((p: any) => ({
-          placeId: p.placeId,
-          description: p.text?.text || "",
-          mainText: p.structuredFormat?.mainText?.text || p.text?.text || "",
-          secondaryText: p.structuredFormat?.secondaryText?.text || "",
-        }));
+      const predictions = (data.predictions || []).map((p: any) => ({
+        placeId: p.place_id,
+        description: p.description || "",
+        mainText: p.structured_formatting?.main_text || p.description || "",
+        secondaryText: p.structured_formatting?.secondary_text || "",
+      }));
 
       return new Response(
         JSON.stringify({ predictions }),
@@ -95,37 +88,35 @@ serve(async (req) => {
         throw new Error("placeId is required");
       }
 
-      console.log("Place details (New) request:", { placeId });
+      console.log("Place details (legacy) request:", { placeId });
 
-      const detailsUrl = new URL(`${PLACES_BASE_URL}/places/v1/places/${placeId}`);
-      if (sessionToken) detailsUrl.searchParams.set("sessionToken", sessionToken);
+      const detailsUrl = new URL(`${MAPS_BASE_URL}/maps/api/place/details/json`);
+      detailsUrl.searchParams.set("place_id", placeId);
+      detailsUrl.searchParams.set("key", apiKey);
+      detailsUrl.searchParams.set("fields", "place_id,formatted_address,name,geometry");
+      if (sessionToken) detailsUrl.searchParams.set("sessiontoken", sessionToken);
 
-      const response = await fetch(detailsUrl.toString(), {
-        method: "GET",
-        headers: {
-          "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask": "id,displayName,formattedAddress,location",
-        },
-      });
-
+      const response = await fetch(detailsUrl.toString());
       const rawText = await response.text();
-      console.log("Details (New) status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
+      console.log("Details (legacy) status:", response.status, "body:", rawText.slice(0, 300));
 
       if (!response.ok) {
-        throw new Error(
-          `Place Details (New) error ${response.status}: ${rawText.slice(0, 500)}`
-        );
+        throw new Error(`Place Details error ${response.status}: ${rawText.slice(0, 500)}`);
       }
 
       const data = JSON.parse(rawText);
+      if (data.status !== "OK" || !data.result) {
+        throw new Error(`Place Details error: ${data.status} ${data.error_message || ""}`);
+      }
 
+      const result = data.result;
       return new Response(
         JSON.stringify({
-          placeId: data.id,
-          formattedAddress: data.formattedAddress,
-          name: data.displayName?.text || data.formattedAddress,
-          lat: data.location?.latitude,
-          lng: data.location?.longitude,
+          placeId: result.place_id,
+          formattedAddress: result.formatted_address,
+          name: result.name || result.formatted_address,
+          lat: result.geometry?.location?.lat,
+          lng: result.geometry?.location?.lng,
         }),
         { headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );

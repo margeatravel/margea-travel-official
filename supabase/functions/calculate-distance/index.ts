@@ -7,10 +7,13 @@ const corsHeaders = {
 
 // Direct Google Maps API — no Lovable Connector Gateway.
 // Server API key is read from the environment at runtime (never hardcoded).
+//
+// IMPORTANT: use the LEGACY endpoints on maps.googleapis.com.
+// The Routes API host (routes.googleapis.com) returns Google's HTML 404
+// page when called from the Supabase edge runtime, even though the same
+// requests work from elsewhere. Geocoding + legacy Distance Matrix work
+// fine here.
 const MAPS_BASE_URL = "https://maps.googleapis.com";
-// Routes API (computeRouteMatrix) lives on routes.googleapis.com — NOT
-// maps.googleapis.com (the old host returns Google's HTML 404 page).
-const ROUTES_BASE_URL = "https://routes.googleapis.com";
 
 interface DistanceRequest {
   pickup: string;
@@ -53,67 +56,31 @@ serve(async (req) => {
       geocode(dropoff),
     ]);
 
-    // Routes API — computeRouteMatrix
-    const body = {
-      origins: [
-        {
-          waypoint: {
-            location: { latLng: { latitude: origin.lat, longitude: origin.lng } },
-          },
-        },
-      ],
-      destinations: [
-        {
-          waypoint: {
-            location: {
-              latLng: { latitude: destination.lat, longitude: destination.lng },
-            },
-          },
-        },
-      ],
-      travelMode: "DRIVE",
-      routingPreference: "TRAFFIC_UNAWARE",
-    };
+    // Legacy Distance Matrix API (same host as Geocoding)
+    const matrixUrl = new URL(`${MAPS_BASE_URL}/maps/api/distancematrix/json`);
+    matrixUrl.searchParams.set("origins", `${origin.lat},${origin.lng}`);
+    matrixUrl.searchParams.set("destinations", `${destination.lat},${destination.lng}`);
+    matrixUrl.searchParams.set("mode", "driving");
+    matrixUrl.searchParams.set("key", apiKey);
 
-    const response = await fetch(
-      `${ROUTES_BASE_URL}/routes/distanceMatrix/v2:computeRouteMatrix`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Goog-Api-Key": apiKey,
-          "X-Goog-FieldMask":
-            "originIndex,destinationIndex,distanceMeters,duration,status,condition",
-        },
-        body: JSON.stringify(body),
-      }
-    );
-
+    const response = await fetch(matrixUrl.toString());
     // Read as text first: Google returns an HTML error page (not JSON)
     // for wrong hosts/keys, and response.json() on HTML hides the cause.
     const rawText = await response.text();
-    console.log("Routes API status:", response.status, "url:", response.url, "body:", rawText.slice(0, 300));
+    console.log("Distance Matrix status:", response.status, "body:", rawText.slice(0, 300));
 
     if (!response.ok) {
-      throw new Error(`Routes API error ${response.status}: ${rawText.slice(0, 500)}`);
+      throw new Error(`Distance Matrix error ${response.status}: ${rawText.slice(0, 500)}`);
     }
 
     const data = JSON.parse(rawText);
-
-    // Response may be an array of elements or a single object
-    const elements = Array.isArray(data) ? data : [data];
-    const element = elements[0];
-
-    if (!element || element.condition !== "ROUTE_EXISTS" || element.distanceMeters == null) {
+    const element = data.rows?.[0]?.elements?.[0];
+    if (!element || element.status !== "OK" || element.distance?.value == null) {
       throw new Error(`No route found: ${JSON.stringify(element)}`);
     }
 
-    const distanceKm = Math.round(element.distanceMeters / 1000);
-    const durationSeconds =
-      typeof element.duration === "string"
-        ? parseInt(element.duration.replace("s", ""), 10)
-        : 0;
-    const durationMinutes = Math.round(durationSeconds / 60);
+    const distanceKm = Math.round(element.distance.value / 1000);
+    const durationMinutes = Math.round((element.duration?.value || 0) / 60);
 
     return new Response(
       JSON.stringify({
