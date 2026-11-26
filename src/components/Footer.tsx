@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Instagram } from "lucide-react";
+import { MapPin, Phone, Mail, Instagram, Facebook } from "lucide-react";
 import { WhatsAppIcon } from "@/components/icons/WhatsAppIcon";
 import { Language } from "./LanguageToggle";
 import { getWhatsAppUrl } from "@/lib/whatsapp";
@@ -23,6 +23,7 @@ const translations = {
     contactTitle: "Contact Us",
     location: "Cancún, Quintana Roo",
     instagram: "@margeatravel",
+    facebook: "Margea Travel",
     legal: "Legal",
     terms: "Terms & Conditions",
     privacy: "Privacy Policy",
@@ -43,6 +44,7 @@ const translations = {
     contactTitle: "Contáctanos",
     location: "Cancún, Quintana Roo",
     instagram: "@margeatravel",
+    facebook: "Margea Travel",
     legal: "Legal",
     terms: "Términos y Condiciones",
     privacy: "Política de Privacidad",
@@ -108,6 +110,10 @@ export function Footer({ language }: FooterProps) {
               <li className="flex items-center gap-3 text-sm text-white/70">
                 <Instagram className="h-5 w-5 flex-shrink-0 text-white" />
                 <a href="https://www.instagram.com/margeatravel/" target="_blank" rel="noopener noreferrer" className="hover:text-[#b8975a] transition-colors duration-200">{t.instagram}</a>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-white/70">
+                <Facebook className="h-5 w-5 flex-shrink-0 text-white" />
+                <a href="https://www.facebook.com/61596968632151" target="_blank" rel="noopener noreferrer" className="hover:text-[#b8975a] transition-colors duration-200">{t.facebook}</a>
               </li>
             </ul>
           </div>
