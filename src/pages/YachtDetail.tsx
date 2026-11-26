@@ -42,6 +42,16 @@ const translations = {
     perHour: "per hour",
     minimum: "Minimum",
     hours: "hours",
+    from: "From",
+    notesTitle: "Good to know",
+    notes: [
+      "Extra passenger: $1,000 MXN per person, up to the yacht's maximum capacity.",
+      "Special dates (Dec 24, Dec 31 and Jan 1): +$2,000 MXN.",
+      "Pier tax: $150 MXN per person, not included in the yacht rate.",
+      "Prices exclude 16% IVA (added for invoices).",
+      "Rates valid from December 1, 2026.",
+    ],
+    durationLabel: "Duration",
   },
   es: {
     backToYachts: "Volver a Yates",
@@ -59,6 +69,16 @@ const translations = {
     perHour: "por hora",
     minimum: "Mínimo",
     hours: "horas",
+    from: "Desde",
+    notesTitle: "Información importante",
+    notes: [
+      "Pasajero extra: $1,000 MXN por persona, hasta la capacidad máxima del yate.",
+      "Fechas especiales (24 dic, 31 dic y 1 ene): +$2,000 MXN.",
+      "Impuesto de muelle: $150 MXN por persona, no incluido en la tarifa del yate.",
+      "Precios sin IVA (para factura se agrega 16% de IVA).",
+      "Tarifas vigentes desde el 1 de diciembre de 2026.",
+    ],
+    durationLabel: "Duración",
   },
 };
 
@@ -109,6 +129,10 @@ export default function YachtDetail() {
       return;
     }
 
+    const durationText = bookingData.duration
+      ? `${bookingData.duration} ${language === "en" ? "hours" : "horas"}`
+      : null;
+
     setIsSubmitting(true);
 
     try {
@@ -122,7 +146,7 @@ export default function YachtDetail() {
           guest_phone: bookingData.phone?.trim() || null,
           requested_date: bookingData.requestedDate || null,
           guests: bookingData.guests ? parseInt(bookingData.guests) : null,
-          duration: bookingData.duration?.trim() || null,
+          duration: durationText,
           special_requests: bookingData.specialRequests?.trim() || null,
         })
         .select("confirmation_number")
@@ -141,7 +165,7 @@ export default function YachtDetail() {
             guest_phone: bookingData.phone?.trim() || null,
             requested_date: bookingData.requestedDate || null,
             guests: bookingData.guests ? parseInt(bookingData.guests) : null,
-            duration: bookingData.duration?.trim() || null,
+            duration: durationText,
             special_requests: bookingData.specialRequests?.trim() || null,
             confirmation_number: data.confirmation_number,
             member_code: appliedMemberCode?.code || null
@@ -187,7 +211,11 @@ export default function YachtDetail() {
   }
 
   const smsNumber = "+5219983188395";
-  const smsMessage = `Hola, me interesa el yate ${yacht.name} (${yacht.size})`;
+  const smsMessage = `Hola, me interesa el yate ${yacht.name} (${yacht.model} ${yacht.size})`;
+
+  const selectedPricing =
+    yacht.pricing.find((p) => String(p.hours) === bookingData.duration) || yacht.pricing[0];
+  const selectedSubtotal = Number(selectedPricing.price.replace(/,/g, "")) || 1000;
 
   return (
     <div className="min-h-screen bg-background">
@@ -248,12 +276,12 @@ export default function YachtDetail() {
             <div className="flex flex-wrap gap-4 text-white/90">
               <div className="flex items-center gap-2">
                 <Badge variant="secondary" className="bg-white/20 text-white backdrop-blur-sm">
-                  {yacht.size}
+                  {yacht.model} · {yacht.size}
                 </Badge>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
-                <span>{language === "en" ? "Up to" : "Hasta"} {yacht.capacity} {language === "en" ? "people" : "personas"}</span>
+                <span>{yacht.capacity}–{yacht.maxCapacity} {language === "en" ? "people" : "personas"}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Anchor className="w-5 h-5" />
@@ -311,16 +339,11 @@ export default function YachtDetail() {
                       >
                         <div>
                           <div className="font-semibold text-lg">
-                            {price.duration}
+                            {price.hours} {t.hours}
                           </div>
-                          {price.isHourly && price.minHours && (
-                            <div className="text-sm text-muted-foreground">
-                              {t.minimum} {price.minHours} {t.hours}
-                            </div>
-                          )}
                           {price.note && (
                             <div className="text-sm text-muted-foreground mt-1">
-                              {price.note}
+                              {price.note[language]}
                             </div>
                           )}
                         </div>
@@ -328,15 +351,25 @@ export default function YachtDetail() {
                           <div className="text-2xl font-bold text-primary">
                             ${price.price} {yacht.currency}
                           </div>
-                          {price.isHourly && (
-                            <div className="text-xs text-muted-foreground">
-                              {t.perHour}
-                            </div>
-                          )}
                         </div>
                       </div>
                     ))}
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Good to know */}
+              <Card>
+                <CardContent className="p-8">
+                  <h2 className="text-2xl font-bold mb-6">{t.notesTitle}</h2>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    {t.notes.map((note, index) => (
+                      <li key={index} className="flex gap-2">
+                        <span aria-hidden>•</span>
+                        <span>{note}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </CardContent>
               </Card>
             </div>
@@ -346,12 +379,12 @@ export default function YachtDetail() {
               <Card className="sticky top-24 border-primary/20 shadow-elegant">
                 <CardContent className="p-8 space-y-6">
                   <div>
-                    <div className="text-sm text-muted-foreground mb-2">Desde</div>
+                    <div className="text-sm text-muted-foreground mb-2">{t.from}</div>
                     <div className="text-3xl font-bold text-primary">
                       ${yacht.pricing[0].price} {yacht.currency}
                     </div>
                     <div className="text-sm text-muted-foreground">
-                      {yacht.pricing[0].duration}
+                      {yacht.pricing[0].hours} {t.hours}
                     </div>
                   </div>
 
@@ -398,7 +431,7 @@ export default function YachtDetail() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Users className="w-4 h-4" />
-                      <span>{language === "en" ? "Up to" : "Hasta"} {yacht.capacity} {language === "en" ? "people" : "personas"}</span>
+                      <span>{yacht.capacity}–{yacht.maxCapacity} {language === "en" ? "people" : "personas"}</span>
                     </div>
                   </div>
                 </CardContent>
@@ -465,18 +498,28 @@ export default function YachtDetail() {
                 id="guests"
                 type="number"
                 min="1"
+                max={yacht.maxCapacity}
                 value={bookingData.guests}
                 onChange={(e) => setBookingData({ ...bookingData, guests: e.target.value })}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="duration">{language === "en" ? "Preferred Duration" : "Duración Preferida"}</Label>
-              <Input
+              <select
                 id="duration"
-                placeholder={language === "en" ? "e.g., 4 hours, Full day" : "ej: 4 horas, Día completo"}
                 value={bookingData.duration}
                 onChange={(e) => setBookingData({ ...bookingData, duration: e.target.value })}
-              />
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <option value="">
+                  {language === "en" ? "Select duration" : "Selecciona duración"}
+                </option>
+                {yacht.pricing.map((p) => (
+                  <option key={p.hours} value={String(p.hours)}>
+                    {p.hours} {t.hours} — ${p.price} {yacht.currency}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="space-y-2">
               <Label htmlFor="specialRequests">{language === "en" ? "Special Requests" : "Solicitudes Especiales"}</Label>
@@ -493,7 +536,7 @@ export default function YachtDetail() {
             {/* Member Code */}
             <div className="border-t pt-4">
               <MemberCodeInput
-                subtotal={Number(yacht?.pricing[0]?.price) || 1000}
+                subtotal={selectedSubtotal}
                 onDiscountApplied={handleMemberCodeApplied}
                 language={language}
               />

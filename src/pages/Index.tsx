@@ -136,16 +136,22 @@ const popularTours = [
 ];
 
 const featuredYacht = {
-  id: "sunseeker-predator-62",
-  name: "Sunseeker Predator 62 pies",
+  id: "diva",
+  name: "Diva",
+  model: "Cranchi",
   marina: "Cancún",
-  size: "62 ft",
-  capacity: 16,
-  image: media("/yacht-images/sunseeker62-1.jpg"),
-  description: "Sunseeker Predator de 62 pies, deportivo y lujoso. Velocidad y estilo en el Caribe mexicano.",
-  pricing: [{ duration: "6 horas", price: "80,000" }],
+  size: "60 ft",
+  capacity: 18,
+  maxCapacity: 23,
+  image: media("/yachts/diva/diva-principal.jpg"),
+  description: "Cranchi de 60 pies, nuestra opción premium de mayor tamaño. Tarifa para hasta 18 pasajeros, con máximo de 23.",
+  pricing: [
+    { hours: 4, price: "16,900" },
+    { hours: 6, price: "18,900" },
+    { hours: 8, price: "19,900" },
+  ],
   currency: "MXN" as const,
-  features: ["Capitán incluido", "Diseño deportivo", "Bar", "Sistema de audio premium"],
+  features: ["Agua, refrescos y hielo incluidos", "Tripulación profesional", "Puedes llevar alimentos y bebidas (sin vino tinto)"],
 };
 
 // Simple IntersectionObserver hook for fade-in-up

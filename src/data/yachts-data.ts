@@ -1,10 +1,17 @@
 import { media } from "@/lib/media";
+
+// Real Cancún Charter fleet for Margea Travel (public rates, MXN, valid from 1 Dec 2026).
+// Prices are the PUBLIC rates; they exclude 16% IVA. Pier tax ($150 MXN/person),
+// extra passengers ($1,000 MXN each) and the special-date surcharge (+$2,000 MXN
+// on 24 Dec, 31 Dec and 1 Jan) are shown as notes on the listing/detail pages.
+// Photos live in Supabase Storage bucket "site-images" under yachts/<slug>/.
+// Aria has no photo yet (placeholder image) and no short description from the
+// provider — update it once Cancún Charter sends the photo.
+
 export interface YachtPricing {
-  duration: string;
-  price: string;
-  isHourly?: boolean;
-  minHours?: number;
-  note?: string;
+  hours: number;
+  price: string; // formatted public price, e.g. "14,000"
+  note?: { en: string; es: string };
 }
 
 export interface YachtContent {
@@ -16,9 +23,11 @@ export interface YachtContent {
 export interface Yacht {
   id: string;
   name: string;
+  model: string;
   marina: string;
   size: string;
-  capacity: number;
+  capacity: number; // passengers included in the rate
+  maxCapacity: number; // absolute maximum (extra passengers at $1,000 MXN each)
   image: string;
   images?: string[];
   description: string;
@@ -27,77 +36,119 @@ export interface Yacht {
   features?: string[];
 }
 
+// Routes per duration, from the Cancún Charter B2B proposal (p. 9).
+const routeNotes: Record<number, { en: string; es: string }> = {
+  4: {
+    en: "Cruise to Isla Mujeres with time at Playa Norte.",
+    es: "Navegación hacia Isla Mujeres con tiempo en Playa Norte.",
+  },
+  6: {
+    en: "Snorkel at the sunken ship, Playa Norte and Punta Sur tour.",
+    es: "Snorkel en el barco hundido, Playa Norte y recorrido por Punta Sur.",
+  },
+  8: {
+    en: "Full experience around Isla Mujeres, Punta Sur, Playa Norte and restaurant option.",
+    es: "Experiencia completa alrededor de Isla Mujeres, Punta Sur, Playa Norte y opción de restaurante.",
+  },
+};
+
+// On-board courtesies, from the Cancún Charter B2B proposal (p. 9).
+const includedFeatures = {
+  en: [
+    "Water, soft drinks and ice included",
+    "Professional crew",
+    "Bring your own food and drinks (no red wine)",
+  ],
+  es: [
+    "Agua, refrescos y hielo incluidos",
+    "Tripulación profesional",
+    "Puedes llevar alimentos y bebidas (sin vino tinto)",
+  ],
+};
+
 export const yachtContent: Record<string, { en: YachtContent; es: YachtContent }> = {
-  "sea-ray-44-1": {
+  agavero: {
     en: {
-      name: "Sea Ray 44 feet",
-      description: "Elegant 44-foot Sea Ray perfect for celebrations and Caribbean cruises. Equipped with all amenities for an unforgettable experience.",
-      features: ["Captain included", "Music", "Sun deck", "Full bathroom"],
+      name: "Agavero",
+      description:
+        "46 ft Sunseeker with excellent value for the experience. Rate for up to 15 passengers, maximum 17.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Sea Ray 44 pies",
-      description: "Elegante Sea Ray de 44 pies perfecto para celebraciones y paseos por el Caribe. Equipado con todas las comodidades para una experiencia inolvidable.",
-      features: ["Capitán incluido", "Música", "Área de sol", "Baño completo"],
+      name: "Agavero",
+      description:
+        "Sunseeker de 46 pies con excelente relación valor-experiencia. Tarifa para hasta 15 pasajeros, con máximo de 17.",
+      features: includedFeatures.es,
     },
   },
-  "sea-ray-50-1": {
+  jackie: {
     en: {
-      name: "Sea Ray 50 feet",
-      description: "50-foot Sea Ray yacht with spacious and comfortable areas, ideal for groups looking to enjoy the sea in style.",
-      features: ["Captain included", "Snorkel", "Cooler", "Sound system"],
+      name: "Jackie",
+      description:
+        "48 ft Sea Ray Flybridge with a spacious flybridge and large capacity. Rate for up to 15 passengers, maximum 20.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Sea Ray 50 pies",
-      description: "Yate Sea Ray de 50 pies con espacios amplios y confortables, ideal para grupos que buscan disfrutar del mar con estilo.",
-      features: ["Capitán incluido", "Snorkel", "Nevera", "Sistema de audio"],
+      name: "Jackie",
+      description:
+        "Sea Ray Flybridge de 48 pies con flybridge amplio y gran capacidad. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+      features: includedFeatures.es,
     },
   },
-  "sea-ray-50-2": {
+  nash: {
     en: {
-      name: "Sea Ray 50 feet",
-      description: "50-foot Sea Ray with modern design and complete equipment for a premium experience in the Mexican Caribbean.",
-      features: ["Captain included", "Fishing gear", "Cooler", "Awning"],
+      name: "Nash",
+      description:
+        "52 ft Fairline with a sporty style and open spaces. Rate for up to 15 passengers, maximum 20.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Sea Ray 50 pies",
-      description: "Sea Ray de 50 pies con diseño moderno y equipamiento completo para una experiencia premium en el Caribe mexicano.",
-      features: ["Capitán incluido", "Equipo de pesca", "Hielera", "Toldo"],
+      name: "Nash",
+      description:
+        "Fairline de 52 pies, estilo deportivo y espacios abiertos. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+      features: includedFeatures.es,
     },
   },
-  "sea-ray-27": {
+  aria: {
     en: {
-      name: "Sea Ray 27 feet",
-      description: "Compact 27-foot Sea Ray yacht, perfect for small groups seeking an intimate experience in crystal-clear waters.",
-      features: ["Captain included", "Lounge area", "Bathroom", "Music system"],
+      name: "Aria",
+      description:
+        "50 ft Trojan in Cancún. Rate for up to 15 passengers, maximum 20.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Sea Ray 27 pies",
-      description: "Yate compacto Sea Ray de 27 pies, perfecto para grupos pequeños que buscan una experiencia íntima en las aguas cristalinas.",
-      features: ["Capitán incluido", "Área lounge", "Baño", "Sistema de música"],
+      name: "Aria",
+      description:
+        "Trojan de 50 pies en Cancún. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+      features: includedFeatures.es,
     },
   },
-  "sunseeker-predator-62": {
+  "sin-nombre": {
     en: {
-      name: "Sunseeker Predator 62 feet",
-      description: "62-foot Sunseeker Predator, sporty and luxurious. Speed and style in the Mexican Caribbean.",
-      features: ["Captain included", "Sport design", "Bar", "Premium sound system"],
+      name: "Sin Nombre",
+      description:
+        "55 ft Sea Ray, ideal for groups and celebrations. Rate for up to 18 passengers, maximum 23.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Sunseeker Predator 62 pies",
-      description: "Sunseeker Predator de 62 pies, deportivo y lujoso. Velocidad y estilo en el Caribe mexicano.",
-      features: ["Capitán incluido", "Diseño deportivo", "Bar", "Sistema de audio premium"],
+      name: "Sin Nombre",
+      description:
+        "Sea Ray de 55 pies, ideal para grupos y celebraciones. Tarifa para hasta 18 pasajeros, con máximo de 23.",
+      features: includedFeatures.es,
     },
   },
-  "avalon-115": {
+  diva: {
     en: {
-      name: "Avalon Luxury 115 feet",
-      description: "The most exclusive yacht in the fleet. 115 feet of pure Avalon luxury. A world-class experience.",
-      features: ["Full crew", "Multiple cabins", "Jacuzzi", "Chef included"],
+      name: "Diva",
+      description:
+        "60 ft Cranchi, our premium, largest option. Rate for up to 18 passengers, maximum 23.",
+      features: includedFeatures.en,
     },
     es: {
-      name: "Avalon Luxury 115 pies",
-      description: "El yate más exclusivo de la flota. 115 pies de puro lujo Avalon. Una experiencia de nivel mundial.",
-      features: ["Tripulación completa", "Múltiples camarotes", "Jacuzzi", "Chef incluido"],
+      name: "Diva",
+      description:
+        "Cranchi de 60 pies, nuestra opción premium de mayor tamaño. Tarifa para hasta 18 pasajeros, con máximo de 23.",
+      features: includedFeatures.es,
     },
   },
 };
@@ -108,127 +159,124 @@ export const getYachtContent = (yachtId: string, language: "en" | "es"): YachtCo
 
 export const yachts: Yacht[] = [
   {
-    id: "sea-ray-44-1",
-    name: "Sea Ray 44 pies",
+    id: "agavero",
+    name: "Agavero",
+    model: "Sunseeker",
     marina: "Cancún",
-    size: "44 ft",
+    size: "46 ft",
     capacity: 15,
-    image: media("/yacht-images/searay-1.jpg"),
-    images: [
-      media("/yacht-images/searay-1.jpg"),
-      media("/yacht-images/searay-2.jpg"),
-      media("/yacht-images/searay-3.jpg"),
-      media("/yacht-images/searay-4.jpg"),
-      media("/yacht-images/searay-5.jpg"),
-      media("/yacht-images/searay-6.jpg"),
+    maxCapacity: 17,
+    image: media("/yachts/agavero/agavero-principal.jpg"),
+    images: [media("/yachts/agavero/agavero-principal.jpg")],
+    description:
+      "Sunseeker de 46 pies con excelente relación valor-experiencia. Tarifa para hasta 15 pasajeros, con máximo de 17.",
+    pricing: [
+      { hours: 4, price: "14,000", note: routeNotes[4] },
+      { hours: 6, price: "16,000", note: routeNotes[6] },
+      { hours: 8, price: "17,000", note: routeNotes[8] },
     ],
-    description: "Elegante Sea Ray de 44 pies perfecto para celebraciones y paseos por el Caribe. Equipado con todas las comodidades para una experiencia inolvidable.",
-    pricing: [{ duration: "6 horas", price: "22,000" }],
     currency: "MXN",
-    features: ["Capitán incluido", "Música", "Área de sol", "Baño completo"],
+    features: includedFeatures.es,
   },
   {
-    id: "sea-ray-50-1",
-    name: "Sea Ray 50 pies",
+    id: "jackie",
+    name: "Jackie",
+    model: "Sea Ray Flybridge",
+    marina: "Cancún",
+    size: "48 ft",
+    capacity: 15,
+    maxCapacity: 20,
+    image: media("/yachts/jackie/jackie-principal.jpg"),
+    images: [media("/yachts/jackie/jackie-principal.jpg")],
+    description:
+      "Sea Ray Flybridge de 48 pies con flybridge amplio y gran capacidad. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+    pricing: [
+      { hours: 4, price: "14,500", note: routeNotes[4] },
+      { hours: 6, price: "16,500", note: routeNotes[6] },
+      { hours: 8, price: "17,500", note: routeNotes[8] },
+    ],
+    currency: "MXN",
+    features: includedFeatures.es,
+  },
+  {
+    id: "nash",
+    name: "Nash",
+    model: "Fairline",
+    marina: "Cancún",
+    size: "52 ft",
+    capacity: 15,
+    maxCapacity: 20,
+    image: media("/yachts/nash/nash-principal.jpg"),
+    images: [media("/yachts/nash/nash-principal.jpg")],
+    description:
+      "Fairline de 52 pies, estilo deportivo y espacios abiertos. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+    pricing: [
+      { hours: 4, price: "14,000", note: routeNotes[4] },
+      { hours: 6, price: "16,000", note: routeNotes[6] },
+      { hours: 8, price: "17,000", note: routeNotes[8] },
+    ],
+    currency: "MXN",
+    features: includedFeatures.es,
+  },
+  {
+    id: "aria",
+    name: "Aria",
+    model: "Trojan",
     marina: "Cancún",
     size: "50 ft",
-    capacity: 16,
-    image: media("/yacht-images/searay50-1.jpg"),
-    images: [
-      media("/yacht-images/searay50-1.jpg"),
-      media("/yacht-images/searay50-2.jpg"),
-      media("/yacht-images/searay50-3.jpg"),
-      media("/yacht-images/searay50-4.jpg"),
-      media("/yacht-images/searay50-5.jpg"),
-      media("/yacht-images/searay50-6.jpg"),
-      media("/yacht-images/searay50-7.jpg"),
+    capacity: 15,
+    maxCapacity: 20,
+    // TODO: replace with the real Aria photo once Cancún Charter sends it.
+    image: media("/yacht-images/yacht-hero.jpg"),
+    images: [media("/yacht-images/yacht-hero.jpg")],
+    description:
+      "Trojan de 50 pies en Cancún. Tarifa para hasta 15 pasajeros, con máximo de 20.",
+    pricing: [
+      { hours: 4, price: "14,000", note: routeNotes[4] },
+      { hours: 6, price: "16,000", note: routeNotes[6] },
+      { hours: 8, price: "17,000", note: routeNotes[8] },
     ],
-    description: "Yate Sea Ray de 50 pies con espacios amplios y confortables, ideal para grupos que buscan disfrutar del mar con estilo.",
-    pricing: [{ duration: "6 horas", price: "25,000" }],
     currency: "MXN",
-    features: ["Capitán incluido", "Snorkel", "Nevera", "Sistema de audio"],
+    features: includedFeatures.es,
   },
   {
-    id: "sea-ray-50-2",
-    name: "Sea Ray 50 pies",
+    id: "sin-nombre",
+    name: "Sin Nombre",
+    model: "Sea Ray",
     marina: "Cancún",
-    size: "50 ft",
-    capacity: 16,
-    image: media("/yacht-images/yacht3-1.jpg"),
-    images: [
-      media("/yacht-images/yacht3-1.jpg"),
-      media("/yacht-images/yacht3-2.jpg"),
-      media("/yacht-images/yacht3-3.jpg"),
-      media("/yacht-images/yacht3-4.jpg"),
-      media("/yacht-images/yacht3-5.jpg"),
-      media("/yacht-images/yacht3-6.jpg"),
-      media("/yacht-images/yacht3-7.jpg"),
-      media("/yacht-images/yacht3-8.jpg"),
+    size: "55 ft",
+    capacity: 18,
+    maxCapacity: 23,
+    image: media("/yachts/sin-nombre/sin-nombre-principal.jpg"),
+    images: [media("/yachts/sin-nombre/sin-nombre-principal.jpg")],
+    description:
+      "Sea Ray de 55 pies, ideal para grupos y celebraciones. Tarifa para hasta 18 pasajeros, con máximo de 23.",
+    pricing: [
+      { hours: 4, price: "16,000", note: routeNotes[4] },
+      { hours: 6, price: "18,000", note: routeNotes[6] },
+      { hours: 8, price: "19,000", note: routeNotes[8] },
     ],
-    description: "Sea Ray de 50 pies con diseño moderno y equipamiento completo para una experiencia premium en el Caribe mexicano.",
-    pricing: [{ duration: "6 horas", price: "23,000" }],
     currency: "MXN",
-    features: ["Capitán incluido", "Equipo de pesca", "Hielera", "Toldo"],
+    features: includedFeatures.es,
   },
   {
-    id: "sea-ray-27",
-    name: "Sea Ray 27 pies",
+    id: "diva",
+    name: "Diva",
+    model: "Cranchi",
     marina: "Cancún",
-    size: "27 ft",
-    capacity: 10,
-    image: media("/yacht-images/yacht4-1.jpg"),
-    images: [
-      media("/yacht-images/yacht4-1.jpg"),
-      media("/yacht-images/yacht4-2.jpg"),
-      media("/yacht-images/yacht4-3.jpg"),
-      media("/yacht-images/yacht4-4.jpg"),
-      media("/yacht-images/yacht4-5.jpg"),
+    size: "60 ft",
+    capacity: 18,
+    maxCapacity: 23,
+    image: media("/yachts/diva/diva-principal.jpg"),
+    images: [media("/yachts/diva/diva-principal.jpg")],
+    description:
+      "Cranchi de 60 pies, nuestra opción premium de mayor tamaño. Tarifa para hasta 18 pasajeros, con máximo de 23.",
+    pricing: [
+      { hours: 4, price: "16,900", note: routeNotes[4] },
+      { hours: 6, price: "18,900", note: routeNotes[6] },
+      { hours: 8, price: "19,900", note: routeNotes[8] },
     ],
-    description: "Yate compacto Sea Ray de 27 pies, perfecto para grupos pequeños que buscan una experiencia íntima en las aguas cristalinas.",
-    pricing: [{ duration: "6 horas", price: "15,000" }],
     currency: "MXN",
-    features: ["Capitán incluido", "Área lounge", "Baño", "Sistema de música"],
-  },
-  {
-    id: "sunseeker-predator-62",
-    name: "Sunseeker Predator 62 pies",
-    marina: "Cancún",
-    size: "62 ft",
-    capacity: 16,
-    image: media("/yacht-images/sunseeker62-1.jpg"),
-    images: [
-      media("/yacht-images/sunseeker62-1.jpg"),
-      media("/yacht-images/sunseeker62-2.jpg"),
-      media("/yacht-images/sunseeker62-3.jpg"),
-      media("/yacht-images/sunseeker62-4.jpg"),
-      media("/yacht-images/sunseeker62-5.jpg"),
-      media("/yacht-images/sunseeker62-6.jpg"),
-      media("/yacht-images/sunseeker62-7.jpg"),
-    ],
-    description: "Sunseeker Predator de 62 pies, deportivo y lujoso. Velocidad y estilo en el Caribe mexicano.",
-    pricing: [{ duration: "6 horas", price: "80,000" }],
-    currency: "MXN",
-    features: ["Capitán incluido", "Diseño deportivo", "Bar", "Sistema de audio premium"],
-  },
-  {
-    id: "avalon-115",
-    name: "Avalon Luxury 115 pies",
-    marina: "Cancún",
-    size: "115 ft",
-    capacity: 25,
-    image: media("/yacht-images/avalon115-1.jpg"),
-    images: [
-      media("/yacht-images/avalon115-1.jpg"),
-      media("/yacht-images/avalon115-2.jpg"),
-      media("/yacht-images/avalon115-3.jpg"),
-      media("/yacht-images/avalon115-4.jpg"),
-      media("/yacht-images/avalon115-5.jpg"),
-      media("/yacht-images/avalon115-6.jpg"),
-      media("/yacht-images/avalon115-7.jpg"),
-    ],
-    description: "El yate más exclusivo de la flota. 115 pies de puro lujo Avalon. Una experiencia de nivel mundial.",
-    pricing: [{ duration: "6 horas", price: "300,000" }],
-    currency: "MXN",
-    features: ["Tripulación completa", "Múltiples camarotes", "Jacuzzi", "Chef incluido"],
+    features: includedFeatures.es,
   },
 ];

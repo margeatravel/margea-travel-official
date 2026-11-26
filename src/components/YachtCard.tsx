@@ -11,20 +11,24 @@ import { ShareButton } from "@/components/ShareButton";
 interface YachtCardProps {
   id: string;
   name: string;
+  model: string;
   marina: string;
   size: string;
   capacity: number;
+  maxCapacity: number;
   image: string;
-  pricing: { duration: string; price: string }[];
+  pricing: { hours: number; price: string }[];
   currency: "MXN" | "USD";
 }
 
 export function YachtCard({
   id,
   name,
+  model,
   marina,
   size,
   capacity,
+  maxCapacity,
   image,
   pricing,
   currency,
@@ -34,8 +38,9 @@ export function YachtCard({
   const yachtContent = getYachtContent(id, language);
   const startingPrice = pricing[0];
   
-  const capacityText = language === "en" ? "Up to" : "Hasta";
   const peopleText = language === "en" ? "people" : "personas";
+  const hoursText = language === "en" ? "hours" : "horas";
+  const fromText = language === "en" ? "From" : "Desde";
 
   return (
     <Link to={`/yachts/${id}`}>
@@ -66,7 +71,7 @@ export function YachtCard({
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
           <div className="absolute top-4 left-4">
             <Badge className="bg-[#1d2839] text-white font-semibold border-0 rounded-[3px] text-[10px] tracking-[0.1em] uppercase px-[9px] py-1">
-              {size}
+              {model} · {size}
             </Badge>
           </div>
         </div>
@@ -90,15 +95,15 @@ export function YachtCard({
 
           <div className="flex items-center gap-2 text-[#6b7280] mb-4 font-inter">
             <Users className="w-4 h-4" />
-            <span className="text-[13px]">{capacityText} {capacity} {peopleText}</span>
+            <span className="text-[13px]">{capacity}–{maxCapacity} {peopleText}</span>
           </div>
 
           <div className="pt-4 border-t border-[rgba(29,40,57,0.07)]">
-            <div className="text-[13px] text-[#6b7280] font-inter">Desde</div>
+            <div className="text-[13px] text-[#6b7280] font-inter">{fromText}</div>
             <div className="font-inter font-bold text-[19px] text-[#1d2839]">
               ${startingPrice.price} {currency}
             </div>
-            <div className="text-[13px] text-[#6b7280] font-inter">{startingPrice.duration}</div>
+            <div className="text-[13px] text-[#6b7280] font-inter">{startingPrice.hours} {hoursText}</div>
           </div>
         </CardContent>
       </Card>
