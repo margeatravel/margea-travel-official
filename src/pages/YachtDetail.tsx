@@ -47,7 +47,7 @@ const translations = {
     notes: [
       "Extra passenger: $1,000 MXN per person, up to the yacht's maximum capacity.",
       "Special dates (Dec 24, Dec 31 and Jan 1): +$2,000 MXN.",
-      "Pier tax: $150 MXN per person, not included in the yacht rate.",
+      "Pier tax: $200 MXN per person, not included in the yacht rate.",
       "Prices exclude 16% IVA (added for invoices).",
       "Rates valid from December 1, 2026.",
     ],
@@ -74,7 +74,7 @@ const translations = {
     notes: [
       "Pasajero extra: $1,000 MXN por persona, hasta la capacidad máxima del yate.",
       "Fechas especiales (24 dic, 31 dic y 1 ene): +$2,000 MXN.",
-      "Impuesto de muelle: $150 MXN por persona, no incluido en la tarifa del yate.",
+      "Impuesto de muelle: $200 MXN por persona, no incluido en la tarifa del yate.",
       "Precios sin IVA (para factura se agrega 16% de IVA).",
       "Tarifas vigentes desde el 1 de diciembre de 2026.",
     ],

@@ -2,8 +2,6 @@ import { SEO } from "@/components/SEO";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { TourCard } from "@/components/TourCard";
-import { YachtCard } from "@/components/YachtCard";
-import { yachts } from "@/data/yachts-data";
 import { useLanguage } from "@/components/LanguageToggle";
 import { ActivityHero } from "@/components/ActivityHero";
 import { chichenItzaTour, getTotalReviews } from "@/data/chichenItzaTour";
@@ -19,18 +17,12 @@ const translations = {
     subtitle: "Explore the best experiences in Riviera Maya",
     packagesSection: "Packages",
     toursSection: "Tours",
-    yachtsSection: "Yacht Charters",
-    yachtsNote:
-      "Private charter priced per boat. Prices exclude 16% IVA; pier tax of $150 MXN per person not included.",
   },
   es: {
     title: "Tours y Actividades",
     subtitle: "Explora las mejores experiencias en Riviera Maya",
     packagesSection: "Paquetes",
     toursSection: "Tours",
-    yachtsSection: "Renta de Yates",
-    yachtsNote:
-      "Charter privado por yate. Precios sin IVA (16%); impuesto de muelle de $150 MXN por persona no incluido.",
   },
 };
 
@@ -290,33 +282,6 @@ export default function Tours() {
             </div>
           </div>
 
-          {/* Yacht Charters Section — real Cancún Charter fleet.
-              Display-only: each card links to its yacht detail page
-              (/yachts/<slug>) for booking. Yacht rates are per boat per
-              duration in MXN, not per-person tour pricing, so they do not
-              go through the tour checkout. Prices come from yachts-data.ts,
-              the single source of truth shared with /yachts. */}
-          <div>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">{t.yachtsSection}</h2>
-            <p className="text-sm text-muted-foreground mb-4">{t.yachtsNote}</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {yachts.map((yacht) => (
-                <YachtCard
-                  key={yacht.id}
-                  id={yacht.id}
-                  name={yacht.name}
-                  model={yacht.model}
-                  marina={yacht.marina}
-                  size={yacht.size}
-                  capacity={yacht.capacity}
-                  maxCapacity={yacht.maxCapacity}
-                  image={yacht.image}
-                  pricing={yacht.pricing}
-                  currency={yacht.currency}
-                />
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

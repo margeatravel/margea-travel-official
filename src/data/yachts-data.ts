@@ -1,7 +1,7 @@
 import { media } from "@/lib/media";
 
 // Real Cancún Charter fleet for Margea Travel (public rates, MXN, valid from 1 Dec 2026).
-// Prices are the PUBLIC rates; they exclude 16% IVA. Pier tax ($150 MXN/person),
+// Prices are the PUBLIC rates; they exclude 16% IVA. Pier tax ($200 MXN/person),
 // extra passengers ($1,000 MXN each) and the special-date surcharge (+$2,000 MXN
 // on 24 Dec, 31 Dec and 1 Jan) are shown as notes on the listing/detail pages.
 // Photos live in Supabase Storage bucket "site-images" under yachts/<slug>/.
